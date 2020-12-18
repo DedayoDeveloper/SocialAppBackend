@@ -71,4 +71,12 @@ public class User {
     public void setPassword(String password) {
         this.password = password;
     }
+
+    public String getCategory() {
+        return category;
+    }
+
+    public void setCategory(String category) {
+        this.category = category;
+    }
 }
