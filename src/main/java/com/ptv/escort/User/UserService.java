@@ -27,6 +27,7 @@ public class UserService {
         createUser.setUsername(user.getUsername());
         createUser.setCategory(user.getCategory());
         createUser.setPassword(passwordencoder.encode(user.getPassword()));
+        createUser.setUserRole(user.getUserRole());
         userRepository.save(createUser);
         return createUser;
     }
