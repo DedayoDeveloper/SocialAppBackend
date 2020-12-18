@@ -23,6 +23,9 @@ public class User {
     @Column(name = "category")
     private String category;
 
+    @Column(name = "user_role")
+    private String userRole;
+
 
     public long getId() {
         return id;
@@ -78,5 +81,13 @@ public class User {
 
     public void setCategory(String category) {
         this.category = category;
+    }
+
+    public String getUserRole() {
+        return userRole;
+    }
+
+    public void setUserRole(String userRole) {
+        this.userRole = userRole;
     }
 }

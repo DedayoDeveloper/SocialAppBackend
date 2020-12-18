@@ -55,22 +55,13 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter{
     protected void configure(HttpSecurity http) throws Exception {
 
         http.csrf().disable().authorizeRequests().antMatchers("/authenticate",
-                "createUser",
-                "/register",
-                "/adminLogin",
-                "/verifyemail",
-                "/passwordresettoken",
-                "/confirmpasswordtoken",
-                "/updatepassword",
-                "/getAllProfessions",
-                "/getTotalUsers").permitAll().anyRequest().authenticated().and().exceptionHandling()
+                "/createUser",
+                "/admin/authenticate").permitAll().anyRequest().authenticated().and().exceptionHandling()
                 .authenticationEntryPoint(jwtAuthenticationEntryPoint)
                 .and().sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS);
         http.addFilterBefore(jwtrequestfilter, UsernamePasswordAuthenticationFilter.class);
 
         http.cors();
-
-
 
     }
 
