@@ -2,6 +2,7 @@ package com.ptv.escort.User;
 
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
@@ -9,7 +10,8 @@ import org.springframework.stereotype.Service;
 public class UserService {
 
     @Autowired
-    private PasswordEncoder passwordEncoder;
+    @Qualifier("bCryptPasswordEncoder")
+    private PasswordEncoder passwordencoder;
 
     @Autowired
     private UserRepository userRepository;
@@ -23,10 +25,13 @@ public class UserService {
         createUser.setLastname(user.getLastname());
         createUser.setEmail(user.getEmail());
         createUser.setUsername(user.getUsername());
-        createUser.setPassword(passwordEncoder.encode(user.getPassword()));
+        createUser.setPassword(passwordencoder.encode(user.getPassword()));
         userRepository.save(createUser);
         return createUser;
     }
+
+
+
 
 
 
