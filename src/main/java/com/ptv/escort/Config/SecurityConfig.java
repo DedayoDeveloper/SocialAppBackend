@@ -81,20 +81,20 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter{
     }
 
 
-    @Configuration
-    public class WebConfiguration implements WebMvcConfigurer, com.ptv.escort.Config.WebConfiguration {
-
-        @Override
-        public void addCorsMappings(CorsRegistry registry) {
-            registry
-                    .addMapping("/**")
-                    .allowedMethods("*")
-                    .allowedHeaders("*")
-                    .allowedOrigins("*")
-                    .allowCredentials(true);
-        }
-
-    }
+//    @Configuration
+//    public class WebConfiguration implements WebMvcConfigurer, com.ptv.escort.Config.WebConfiguration {
+//
+//        @Override
+//        public void addCorsMappings(CorsRegistry registry) {
+//            registry
+//                    .addMapping("/**")
+//                    .allowedMethods("*")
+//                    .allowedHeaders("*")
+//                    .allowedOrigins("http://localhost:3000")
+//                    .allowCredentials(true);
+//        }
+//
+//    }
 
 
 }
