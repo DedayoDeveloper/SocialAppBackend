@@ -65,7 +65,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter{
                 .and().sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS);
         http.addFilterBefore(jwtrequestfilter, UsernamePasswordAuthenticationFilter.class);
 
-        http.cors();
+//        http.cors();
     }
 
 
@@ -99,20 +99,20 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter{
 //        };
 //    }
 
-    @Configuration
-    public class WebConfiguration implements WebMvcConfigurer{
-
-        @Override
-        public void addCorsMappings(CorsRegistry registry) {
-            registry.addMapping("/**")
-                    .allowedOriginPatterns("*")
-                    .allowedOrigins("*")
-                    .allowedMethods("GET", "HEAD", "POST", "PUT", "DELETE", "OPTIONS")
-                    .maxAge(3600).allowCredentials(false)
-                    .allowedHeaders("*");
-
-        }
-    }
+//    @Configuration
+//    public class WebConfiguration implements WebMvcConfigurer{
+//
+//        @Override
+//        public void addCorsMappings(CorsRegistry registry) {
+//            registry.addMapping("/**")
+//                    .allowedOriginPatterns("*")
+//                    .allowedOrigins("*")
+//                    .allowedMethods("GET", "HEAD", "POST", "PUT", "DELETE", "OPTIONS")
+//                    .maxAge(3600).allowCredentials(false)
+//                    .allowedHeaders("*");
+//
+//        }
+//    }
 
     }
 
