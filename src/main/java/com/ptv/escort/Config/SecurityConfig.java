@@ -105,9 +105,9 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter{
         @Override
         public void addCorsMappings(CorsRegistry registry) {
             registry.addMapping("/**")
-                    .allowedOrigins("http://ptvescort.com")
+                    .allowedOriginPatterns("*")
+                    .allowedOrigins("*")
                     .allowedMethods("GET", "HEAD", "POST", "PUT", "DELETE", "OPTIONS")
-                    .allowCredentials(true)
                     .maxAge(3600)
                     .allowedHeaders("*");
         }
