@@ -65,7 +65,6 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter{
                 .and().sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS);
         http.addFilterBefore(jwtrequestfilter, UsernamePasswordAuthenticationFilter.class);
 
-        http.cors().disable();
 
     }
 

@@ -17,6 +17,7 @@ import org.springframework.web.bind.annotation.*;
 
 //@CrossOrigin(origins = "*")
 @RestController
+@CrossOrigin(origins = "*", maxAge = 3600)
 public class AdminController {
 
 
