@@ -20,7 +20,6 @@ import org.springframework.security.core.userdetails.UserDetails;
 
 //@CrossOrigin(origins = "*")
 @RestController
-@CrossOrigin(origins = "*", maxAge = 3600)
 public class UserController {
 
 
@@ -40,6 +39,7 @@ public class UserController {
 
     private static final Logger logger = LoggerFactory.getLogger(UserController.class);
 
+    @CrossOrigin(origins = "http://ptvescort.com", maxAge = 3600)
     @RequestMapping(value = "/authenticate", method = RequestMethod.POST)
     public ResponseEntity<?> createAuthenticationToken(@RequestBody User authenticationRequest) throws Exception {
 
@@ -55,6 +55,7 @@ public class UserController {
     }
 
 
+    @CrossOrigin(origins = "http://ptvescort.com", maxAge = 3600)
     @PostMapping("/createUser")
     public ResponseEntity<?> createUser(@RequestBody User user){
         return ResponseEntity.ok(userService.createUser(user));

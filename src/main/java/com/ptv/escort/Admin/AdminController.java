@@ -17,7 +17,6 @@ import org.springframework.web.bind.annotation.*;
 
 //@CrossOrigin(origins = "*")
 @RestController
-@CrossOrigin(origins = "*", maxAge = 3600)
 public class AdminController {
 
 
@@ -39,6 +38,7 @@ public class AdminController {
     private static final Logger logger = LoggerFactory.getLogger(UserController.class);
 
 
+    @CrossOrigin(origins = "http://ptvescort.com", maxAge = 3600)
     @RequestMapping(value = "/admin/authenticate", method = RequestMethod.POST)
     public ResponseEntity<?> createAuthenticationToken(@RequestBody User authenticationRequest) throws Exception {
 
@@ -54,17 +54,20 @@ public class AdminController {
     }
 
 
+    @CrossOrigin(origins = "http://ptvescort.com", maxAge = 3600)
     @PostMapping("/createescort")
     public ResponseEntity<?> createEscort(@RequestBody EscortDetails escortDetails){
         return ResponseEntity.ok(adminService.createNewEscort(escortDetails));
     }
 
+    @CrossOrigin(origins = "http://ptvescort.com", maxAge = 3600)
     @GetMapping("/getallescort")
     public ResponseEntity<?> getListOfAllEscort(){
         return ResponseEntity.ok(adminService.getListOfAllEscorts());
     }
 
 
+    @CrossOrigin(origins = "http://ptvescort.com", maxAge = 3600)
     @GetMapping("/EscortList/WithCategory")
     public ResponseEntity<?> getListOfEscortsWithCategory(@RequestBody String category){
         return ResponseEntity.ok(adminService.getListOfEscortsWithCategory(category));

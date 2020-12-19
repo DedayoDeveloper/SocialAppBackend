@@ -108,8 +108,9 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter{
                     .allowedOriginPatterns("*")
                     .allowedOrigins("*")
                     .allowedMethods("GET", "HEAD", "POST", "PUT", "DELETE", "OPTIONS")
-                    .maxAge(3600)
+                    .maxAge(3600).allowCredentials(false)
                     .allowedHeaders("*");
+
         }
     }
 
