@@ -65,7 +65,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter{
                 .and().sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS);
         http.addFilterBefore(jwtrequestfilter, UsernamePasswordAuthenticationFilter.class);
 
-        http.cors();
+        http.cors().disable();
 
     }
 
@@ -82,38 +82,38 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter{
         return NoOpPasswordEncoder.getInstance();
     }
 
-    @Value( "${app.allow.origins}" )
-    private String allowOrigins;
-    @Bean
-    public WebMvcConfigurer corsConfigurer() {
-        System.out.println("allow origin: "+allowOrigins);
-        return new WebMvcConfigurerAdapter(){
-            @Override
-            public void addCorsMappings(CorsRegistry registry) {
-                registry.addMapping("/**")
-                        //.allowedOrigins("http://localhost")
-                        .allowedOrigins(allowOrigins)
-                        .allowedHeaders("*")
-                        .allowCredentials(true)
-                        .allowedMethods("PUT", "DELETE","GET", "POST");
-            }
-        };
-    }
-
-//    @Configuration
-//    public class WebConfiguration implements WebMvcConfigurer{
-//
-//        @Override
-//        public void addCorsMappings(CorsRegistry registry) {
-//            registry
-//                    .addMapping("/**")
-//                    .allowedMethods("*")
-//                    .allowedHeaders("*")
-//                    .allowedOrigins("http://localhost:3000")
-//                    .allowCredentials(true);
-//        }
-//
+//    @Value( "${app.allow.origins}" )
+//    private String allowOrigins;
+//    @Bean
+//    public WebMvcConfigurer corsConfigurer() {
+//        System.out.println("allow origin: "+allowOrigins);
+//        return new WebMvcConfigurerAdapter(){
+//            @Override
+//            public void addCorsMappings(CorsRegistry registry) {
+//                registry.addMapping("/**")
+//                        //.allowedOrigins("http://localhost")
+//                        .allowedOrigins(allowOrigins)
+//                        .allowedHeaders("*")
+//                        .allowCredentials(true)
+//                        .allowedMethods("PUT", "DELETE","GET", "POST");
+//            }
+//        };
 //    }
+
+    @Configuration
+    public class WebConfiguration implements WebMvcConfigurer{
+
+        @Override
+        public void addCorsMappings(CorsRegistry registry) {
+            registry
+                    .addMapping("/**")
+                    .allowedMethods("*")
+                    .allowedHeaders("*")
+                    .allowedOrigins("http://localhost:3000")
+                    .allowCredentials(true);
+        }
+
+    }
 
 
 }
