@@ -109,7 +109,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter{
                     .addMapping("/**")
                     .allowedMethods("*")
                     .allowedHeaders("*")
-                    .allowedOrigins("http://localhost:3000")
+                    .allowedOrigins("https://ptvescort.com")
                     .allowCredentials(true);
         }
 
