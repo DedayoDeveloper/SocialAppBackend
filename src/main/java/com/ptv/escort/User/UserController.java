@@ -18,6 +18,7 @@ import org.springframework.security.core.userdetails.UserDetails;
 
 
 
+@CrossOrigin(origins = "*")
 @RestController
 public class UserController {
 
