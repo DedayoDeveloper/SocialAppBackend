@@ -99,20 +99,18 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter{
 //        };
 //    }
 
-//    @Configuration
-//    public class WebConfiguration implements WebMvcConfigurer{
-//
-//        @Override
-//        public void addCorsMappings(CorsRegistry registry) {
-//            registry.addMapping("/**")
-//                    .allowedOriginPatterns("*")
-//                    .allowedOrigins("*")
-//                    .allowedMethods("GET", "HEAD", "POST", "PUT", "DELETE", "OPTIONS")
-//                    .maxAge(3600).allowCredentials(false)
-//                    .allowedHeaders("*");
-//
-//        }
-//    }
+    @Configuration
+    public class WebConfiguration implements WebMvcConfigurer{
+
+        @Override
+        public void addCorsMappings(CorsRegistry registry) {
+            registry.addMapping("/**")
+                    .allowedOriginPatterns("http://ptvescort.com")
+                    .allowedMethods("GET", "HEAD", "POST", "PUT", "DELETE", "OPTIONS")
+                    .maxAge(3600).allowCredentials(true)
+                    .allowedHeaders("*");
+        }
+    }
 
     }
 
