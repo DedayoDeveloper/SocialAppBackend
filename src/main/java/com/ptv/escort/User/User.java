@@ -26,6 +26,9 @@ public class User {
     @Column(name = "user_role")
     private String userRole;
 
+    @Column(name = "sex")
+    private String sex;
+
 
     public long getId() {
         return id;
@@ -89,5 +92,13 @@ public class User {
 
     public void setUserRole(String userRole) {
         this.userRole = userRole;
+    }
+
+    public String getSex() {
+        return sex;
+    }
+
+    public void setSex(String sex) {
+        this.sex = sex;
     }
 }

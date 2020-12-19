@@ -62,4 +62,8 @@ public class AdminService {
    public List<EscortDetails> getListOfAllEscorts(){
         return escortReposiroty.findAll();
    }
+
+    public List<EscortDetails> getListOfEscortsWithCategory(String category) {
+        return escortReposiroty.getAllListOfEscortsWithcategory(category);
+    }
 }

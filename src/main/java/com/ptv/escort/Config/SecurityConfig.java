@@ -16,7 +16,9 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.NoOpPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
+import org.springframework.web.servlet.config.annotation.CorsRegistry;
 import org.springframework.web.servlet.config.annotation.EnableWebMvc;
+import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 
 @Configuration
 @EnableWebMvc
@@ -79,20 +81,20 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter{
     }
 
 
-//    @Configuration
-//    public class WebConfiguration implements WebMvcConfigurer {
-//
-//        @Override
-//        public void addCorsMappings(CorsRegistry registry) {
-//            registry
-//                    .addMapping("/**")
-//                    .allowedMethods("*")
-//                    .allowedHeaders("*")
-//                    .allowedOrigins("*")
-//                    .allowCredentials(true);
-//        }
-//
-//    }
+    @Configuration
+    public class WebConfiguration implements WebMvcConfigurer, com.ptv.escort.Config.WebConfiguration {
+
+        @Override
+        public void addCorsMappings(CorsRegistry registry) {
+            registry
+                    .addMapping("/**")
+                    .allowedMethods("*")
+                    .allowedHeaders("*")
+                    .allowedOrigins("*")
+                    .allowCredentials(true);
+        }
+
+    }
 
 
 }

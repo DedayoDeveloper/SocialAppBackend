@@ -63,6 +63,14 @@ public class AdminController {
     }
 
 
+    @GetMapping("/EscortList/WithCategory")
+    public ResponseEntity<?> getListOfEscortsWithCategory(@RequestBody String category){
+        return ResponseEntity.ok(adminService.getListOfEscortsWithCategory(category));
+    }
+
+
+
+
 
 
 }
