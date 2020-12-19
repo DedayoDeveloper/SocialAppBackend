@@ -93,6 +93,8 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter{
                 registry.addMapping("/**")
                         //.allowedOrigins("http://localhost")
                         .allowedOrigins(allowOrigins)
+                        .allowedHeaders("*")
+                        .allowCredentials(true)
                         .allowedMethods("PUT", "DELETE","GET", "POST");
             }
         };
