@@ -98,21 +98,20 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter{
 //            }
 //        };
 //    }
-
-    @Configuration
-    public class WebConfiguration implements WebMvcConfigurer{
-
+@Bean
+public WebMvcConfigurer corsConfigurer() {
+    return new WebMvcConfigurer() {
         @Override
         public void addCorsMappings(CorsRegistry registry) {
-            registry
-                    .addMapping("/**")
-                    .allowedMethods("*")
-                    .allowedHeaders("*")
-                    .allowedOrigins("*")
-                    .allowCredentials(true);
+            registry.addMapping("/**")
+                    .allowCredentials(false)
+                    .allowedMethods("POST", "GET", "PUT", "OPTIONS", "DELETE")
+                    .allowedOrigins("*");
         }
+    };
+}
 
-    }
+
 
 
 }
