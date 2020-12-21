@@ -50,7 +50,7 @@ public class AdminController {
 
         final String jwt = jwttokenutil.generateToken("test");
         logger.info(jwt);
-        return ResponseEntity.ok(new JwtResponse(jwt));
+        return ResponseEntity.ok(new JwtResponse(jwt,user));
     }
 
 
