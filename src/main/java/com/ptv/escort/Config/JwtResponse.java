@@ -5,12 +5,12 @@ import com.ptv.escort.User.User;
 public class JwtResponse {
 
 
-    private User userDetail;
+    private User user;
     private final String jwt;
 
     public JwtResponse(String jwt, User user) {
         this.jwt = jwt;
-        this.userDetail = userDetail;
+        this.user = user;
     }
 
 
@@ -19,7 +19,7 @@ public class JwtResponse {
         return jwt;
     }
 
-    public User getUserDetail() {
-        return userDetail;
+    public User getUser() {
+        return user;
     }
 }

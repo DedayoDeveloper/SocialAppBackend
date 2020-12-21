@@ -48,8 +48,19 @@ public class UserController {
             throw new RuntimeException("User does not exist.");
         }
         User user = userService.login(authenticationRequest);
+        user.setPassword(null);
 
-        final String jwt = jwttokenutil.generateToken("test");
+//        try{
+//            ObjectMapper mapper = new ObjectMapper();
+//            logger.info(mapper.writeValueAsString(user));
+//        }catch (Exception e){
+//
+//        }
+
+
+
+        logger.info("user details {}", user);
+        final String jwt = jwttokenutil.generateToken("ptvescort");
         logger.info(jwt);
         return ResponseEntity.ok(new JwtResponse(jwt,user));
     }

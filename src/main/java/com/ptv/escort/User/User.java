@@ -1,5 +1,9 @@
 package com.ptv.escort.User;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import com.fasterxml.jackson.annotation.JsonProperty;
+
 import javax.persistence.*;
 
 @Entity
@@ -18,8 +22,12 @@ public class User {
     private String username;
     @Column(name = "email")
     private String email;
+
+    @JsonIgnoreProperties
     @Column(name = "password")
     private String password;
+
+
     @Column(name = "category")
     private String category;
 
