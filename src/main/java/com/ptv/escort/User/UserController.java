@@ -78,4 +78,9 @@ public class UserController {
         return ResponseEntity.ok(userService.getListOfAllUsers());
     }
 
+    @PostMapping("/user/by/category")
+    public ResponseEntity<?> getAllEscortsByUserChosenCategory(@RequestBody String category){
+        return ResponseEntity.ok(userService.findAllUsersByCategory(category));
+    }
+
 }

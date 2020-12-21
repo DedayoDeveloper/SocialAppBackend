@@ -58,4 +58,8 @@ public class UserService {
     public List<User> getListOfAllUsers() {
         return userRepository.findAll();
     }
+
+    public List<User> findAllUsersByCategory(String category) {
+        return userRepository.findAllByCategory(category);
+    }
 }
