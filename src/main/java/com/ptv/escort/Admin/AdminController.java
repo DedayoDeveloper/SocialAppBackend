@@ -70,8 +70,8 @@ public class AdminController {
 
     @CrossOrigin(origins = "http://ptvescort.com", maxAge = 3600)
     @PostMapping("/EscortList/WithCategory")
-    public ResponseEntity<?> getListOfEscortsWithCategory(@RequestBody String category){
-        return ResponseEntity.ok(adminService.getListOfEscortsWithCategory(category));
+    public ResponseEntity<?> getListOfEscortsWithCategory(@RequestBody EscortDetails details){
+        return ResponseEntity.ok(adminService.getListOfEscortsWithCategory(details.getCategory()));
     }
 
 

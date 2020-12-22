@@ -64,6 +64,6 @@ public class AdminService {
    }
 
     public List<EscortDetails> getListOfEscortsWithCategory(String category) {
-        return escortReposiroty.getAllListOfEscortsWithcategory(category);
+        return escortReposiroty.findAllByCategory(category);
     }
 }

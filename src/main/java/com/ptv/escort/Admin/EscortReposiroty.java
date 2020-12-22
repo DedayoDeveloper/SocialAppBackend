@@ -11,8 +11,8 @@ import java.util.List;
 
 public interface EscortReposiroty extends JpaRepository<EscortDetails, Long> {
 
-    @Query("select e from EscortDetails e where e.category = :category")
-    List<EscortDetails> getAllListOfEscortsWithcategory(@Param("category") String category);
+//    @Query("select e from EscortDetails e where e.category = :category")
+    List<EscortDetails> findAllByCategory(String category);
 
 
 }
