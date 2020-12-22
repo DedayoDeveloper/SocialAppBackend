@@ -1,6 +1,7 @@
 package com.ptv.escort.User;
 
 
+import com.ptv.escort.Admin.EscortReposiroty;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -17,6 +18,9 @@ public class UserService {
 
     @Autowired
     private UserRepository userRepository;
+
+    @Autowired
+    private EscortReposiroty escortReposiroty;
 
 
 
@@ -59,7 +63,7 @@ public class UserService {
         return userRepository.findAll();
     }
 
-    public List<User> findAllUsersByCategory(String category) {
-        return userRepository.findAllByCategory(category);
-    }
+//    public List<User> findAllUsersByCategory(String category) {
+//        return escortReposiroty.findAllByCategory(category);
+//    }
 }

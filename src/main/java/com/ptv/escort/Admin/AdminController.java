@@ -49,7 +49,7 @@ public class AdminController {
         }
         User user = adminService.loginAdmin(authenticationRequest);
 
-        final String jwt = jwttokenutil.generateToken("test");
+        final String jwt = jwttokenutil.generateToken(userDetails);
         logger.info(jwt);
         return ResponseEntity.ok(new JwtResponse(jwt,user));
     }
@@ -69,17 +69,17 @@ public class AdminController {
 
 
     @CrossOrigin(origins = "http://ptvescort.com", maxAge = 3600)
-    @GetMapping("/EscortList/WithCategory")
+    @PostMapping("/EscortList/WithCategory")
     public ResponseEntity<?> getListOfEscortsWithCategory(@RequestBody String category){
         return ResponseEntity.ok(adminService.getListOfEscortsWithCategory(category));
     }
 
 
-    @CrossOrigin(origins = "http://ptvescort.com", maxAge = 3600)
-    @GetMapping("/list/all/category/foradmin")
-    public ResponseEntity<?> listAllCategories(){
-        return ResponseEntity.ok(Category.values());
-    }
+//    @CrossOrigin(origins = "http://ptvescort.com", maxAge = 3600)
+//    @GetMapping("/list/all/category/foradmin")
+//    public ResponseEntity<?> listAllCategories(){
+//        return ResponseEntity.ok(Category.values());
+//    }
 
 
 

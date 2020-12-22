@@ -60,7 +60,7 @@ public class UserController {
 
 
         logger.info("user details {}", user);
-        final String jwt = jwttokenutil.generateToken("ptvescort");
+        final String jwt = jwttokenutil.generateToken(userDetails);
         logger.info(jwt);
         return ResponseEntity.ok(new JwtResponse(jwt,user));
     }
@@ -79,15 +79,16 @@ public class UserController {
         return ResponseEntity.ok(userService.getListOfAllUsers());
     }
 
-    @CrossOrigin(origins = "http://ptvescort.com", maxAge = 3600)
-    @PostMapping("/user/by/category")
-    public ResponseEntity<?> getAllEscortsByUserChosenCategory(@RequestBody String category){
-        return ResponseEntity.ok(userService.findAllUsersByCategory(category));
-    }
+//    @CrossOrigin(origins = "http://ptvescort.com", maxAge = 3600)
+//    @PostMapping("/user/by/category")
+//    public ResponseEntity<?> getAllEscortsByUserChosenCategory(@RequestBody String category){
+//        return ResponseEntity.ok(userService.findAllUsersByCategory(category));
+//    }
 
     @CrossOrigin(origins = "http://ptvescort.com", maxAge = 3600)
-    @GetMapping("/list/all/category")
+    @GetMapping("/listallcategory")
     public ResponseEntity<?> listAllCategories(){
+        logger.info("WE GOT HERE!!!!");
         return ResponseEntity.ok(Category.values());
     }
 
