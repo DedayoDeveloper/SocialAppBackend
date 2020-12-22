@@ -21,4 +21,7 @@ public interface EscortRepository extends JpaRepository<EscortDetails, Long> {
     @Transactional
     @Query("update EscortDetails e set e.delFlag = 'Y' where e.id = :id")
     int softDelete(long id);
+
+    @Query("select e from EscortDetails e where e.id = :id")
+    EscortDetails findEscortDetailsById(long id);
 }

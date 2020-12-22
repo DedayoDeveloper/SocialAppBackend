@@ -113,4 +113,11 @@ public class AdminController {
         return adminService.deleteEscort(id);
     }
 
+    @CrossOrigin(origins = "http://ptvescort.com", maxAge = 3600)
+    @PostMapping("/get/escort/details/{id}")
+    public ResponseEntity<?> getEscortDetails(@PathVariable("id") long id){
+        return ResponseEntity.ok(adminService.getEscortDetails(id));
+
+    }
+
 }

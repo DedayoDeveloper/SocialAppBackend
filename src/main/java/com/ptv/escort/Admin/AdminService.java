@@ -72,4 +72,8 @@ public class AdminService {
         }
         return deleteEscort;
     }
+
+    public EscortDetails getEscortDetails(long id) {
+        return escortReposiroty.findEscortDetailsById(id);
+    }
 }
