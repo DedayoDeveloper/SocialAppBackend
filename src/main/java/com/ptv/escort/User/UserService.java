@@ -1,7 +1,7 @@
 package com.ptv.escort.User;
 
 
-import com.ptv.escort.Admin.EscortReposiroty;
+import com.ptv.escort.Admin.EscortRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -20,7 +20,7 @@ public class UserService {
     private UserRepository userRepository;
 
     @Autowired
-    private EscortReposiroty escortReposiroty;
+    private EscortRepository escortReposiroty;
 
 
 

@@ -107,5 +107,10 @@ public class AdminController {
 
 
 
+    @CrossOrigin(origins = "http://ptvescort.com", maxAge = 3600)
+    @DeleteMapping("/delete/escort/{id}")
+    public int deleteEscort(@PathVariable("id") long id){
+        return adminService.deleteEscort(id);
+    }
 
 }

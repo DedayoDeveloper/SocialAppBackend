@@ -5,12 +5,9 @@ import com.ptv.escort.User.User;
 import com.ptv.escort.User.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
-import org.springframework.data.domain.Page;
-import org.springframework.data.domain.PageRequest;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
-import java.awt.print.Pageable;
 import java.util.List;
 
 @Service
@@ -24,7 +21,7 @@ public class AdminService {
     private PasswordEncoder passwordencoder;
 
     @Autowired
-    private EscortReposiroty escortReposiroty;
+    private EscortRepository escortReposiroty;
 
 
     public User loginAdmin(User user){
@@ -53,6 +50,7 @@ public class AdminService {
         ed.setPhoneNumber(phoneNumber);
         ed.setName(name);
         ed.setPhotos(fileName);
+        ed.setDelFlag("N");
         ed.setLocation(location);
         ed.setDescription(description);
         escortReposiroty.save(ed);
@@ -65,5 +63,13 @@ public class AdminService {
 
     public List<EscortDetails> getListOfEscortsWithCategory(String category) {
         return escortReposiroty.findAllByCategory(category);
+    }
+
+    public int deleteEscort(long id) {
+        int deleteEscort = escortReposiroty.softDelete(id);
+        if (deleteEscort < 1){
+            throw new RuntimeException("Unable to delete user");
+        }
+        return deleteEscort;
     }
 }

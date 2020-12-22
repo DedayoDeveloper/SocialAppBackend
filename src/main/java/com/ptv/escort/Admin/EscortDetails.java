@@ -1,8 +1,11 @@
 package com.ptv.escort.Admin;
 
+import org.hibernate.annotations.Where;
+
 import javax.persistence.*;
 
 @Entity
+@Where(clause ="del_flag='N'")
 @Table(name = "escort_details")
 public class EscortDetails {
 
@@ -26,6 +29,24 @@ public class EscortDetails {
 
     @Column(name = "description")
     private String description;
+
+    @Column(name = "del_Flag")
+    private String delFlag;
+
+    public void setDelFlag(String delFlag) {
+        this.delFlag = delFlag;
+    }
+
+    public String getDelFlag() {
+        return delFlag;
+    }
+
+    @Transient
+    public String getPhotosImagePath() {
+        if (photos == null) return null;
+
+        return "/user-photos/" + id + "/" + photos;
+    }
 
 
     public long getId() {
