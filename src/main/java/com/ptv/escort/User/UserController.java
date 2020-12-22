@@ -73,14 +73,22 @@ public class UserController {
     }
 
 
+    @CrossOrigin(origins = "http://ptvescort.com", maxAge = 3600)
     @GetMapping("/allusers")
     public ResponseEntity<?> getAllUsers(){
         return ResponseEntity.ok(userService.getListOfAllUsers());
     }
 
+    @CrossOrigin(origins = "http://ptvescort.com", maxAge = 3600)
     @PostMapping("/user/by/category")
     public ResponseEntity<?> getAllEscortsByUserChosenCategory(@RequestBody String category){
         return ResponseEntity.ok(userService.findAllUsersByCategory(category));
+    }
+
+    @CrossOrigin(origins = "http://ptvescort.com", maxAge = 3600)
+    @GetMapping("/list/all/category")
+    public ResponseEntity<?> listAllCategories(){
+        return ResponseEntity.ok(Category.values());
     }
 
 }

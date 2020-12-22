@@ -4,6 +4,7 @@ package com.ptv.escort.Admin;
 import com.ptv.escort.Config.JwtResponse;
 import com.ptv.escort.Config.JwtUtil;
 import com.ptv.escort.Config.UserVerification;
+import com.ptv.escort.User.Category;
 import com.ptv.escort.User.User;
 import com.ptv.escort.User.UserController;
 import com.ptv.escort.User.UserService;
@@ -74,6 +75,11 @@ public class AdminController {
     }
 
 
+    @CrossOrigin(origins = "http://ptvescort.com", maxAge = 3600)
+    @GetMapping("/list/all/category/foradmin")
+    public ResponseEntity<?> listAllCategories(){
+        return ResponseEntity.ok(Category.values());
+    }
 
 
 
