@@ -45,16 +45,16 @@ public class AdminService {
     }
 
 
-    public EscortDetails createNewEscort(EscortDetails escortDetails){
+    public EscortDetails createNewEscort(String name,String location,String phoneNumber,String email
+            ,String category,String description, String fileName){
         EscortDetails ed = new EscortDetails();
-        ed.setEmail(escortDetails.getEmail());
-        ed.setCategory(escortDetails.getCategory());
-        ed.setPhoneNumber(escortDetails.getPhoneNumber());
-        ed.setCategory(escortDetails.getCategory());
-        ed.setInstagram(escortDetails.getInstagram());
-        ed.setNickName(escortDetails.getNickName());
-        ed.setTwitter(escortDetails.getTwitter());
-        ed.setLocation(escortDetails.getLocation());
+        ed.setEmail(email);
+        ed.setCategory(category);
+        ed.setPhoneNumber(phoneNumber);
+        ed.setName(name);
+        ed.setPhotos(fileName);
+        ed.setLocation(location);
+        ed.setDescription(description);
         escortReposiroty.save(ed);
         return ed;
     }

@@ -10,20 +10,22 @@ public class EscortDetails {
     @GeneratedValue(strategy = GenerationType.AUTO)
     private long id;
 
-    @Column(name = "nickname")
-    private String nickName;
+    @Column(name = "name")
+    private String name;
     @Column(name = "location")
     private String location;
     @Column(name = "phone_no")
     private String phoneNumber;
     @Column(name = "email")
     private String email;
-    @Column(name = "instagram")
-    private String instagram;
-    @Column(name = "twitter")
-    private String twitter;
     @Column(name = "category")
     private String category;
+
+    @Column(name = "photos")
+    private String photos;
+
+    @Column(name = "description")
+    private String description;
 
 
     public long getId() {
@@ -34,12 +36,12 @@ public class EscortDetails {
         this.id = id;
     }
 
-    public String getNickName() {
-        return nickName;
+    public String getName() {
+        return name;
     }
 
-    public void setNickName(String nickName) {
-        this.nickName = nickName;
+    public void setName(String name) {
+        this.name = name;
     }
 
     public String getLocation() {
@@ -66,27 +68,27 @@ public class EscortDetails {
         this.email = email;
     }
 
-    public String getInstagram() {
-        return instagram;
-    }
-
-    public void setInstagram(String instagram) {
-        this.instagram = instagram;
-    }
-
-    public String getTwitter() {
-        return twitter;
-    }
-
-    public void setTwitter(String twitter) {
-        this.twitter = twitter;
-    }
-
     public String getCategory() {
         return category;
     }
 
     public void setCategory(String category) {
         this.category = category;
+    }
+
+    public String getPhotos() {
+        return photos;
+    }
+
+    public void setPhotos(String photos) {
+        this.photos = photos;
+    }
+
+    public String getDescription() {
+        return description;
+    }
+
+    public void setDescription(String description) {
+        this.description = description;
     }
 }

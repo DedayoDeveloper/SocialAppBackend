@@ -4,17 +4,21 @@ package com.ptv.escort.Admin;
 import com.ptv.escort.Config.JwtResponse;
 import com.ptv.escort.Config.JwtUtil;
 import com.ptv.escort.Config.UserVerification;
-import com.ptv.escort.User.Category;
 import com.ptv.escort.User.User;
 import com.ptv.escort.User.UserController;
-import com.ptv.escort.User.UserService;
+import com.ptv.escort.Utils.FileUploadUtil;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.util.StringUtils;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
+import org.springframework.web.servlet.view.RedirectView;
+
+import java.io.IOException;
 
 //@CrossOrigin(origins = "*")
 @RestController
@@ -55,11 +59,11 @@ public class AdminController {
     }
 
 
-    @CrossOrigin(origins = "http://ptvescort.com", maxAge = 3600)
-    @PostMapping("/createescort")
-    public ResponseEntity<?> createEscort(@RequestBody EscortDetails escortDetails){
-        return ResponseEntity.ok(adminService.createNewEscort(escortDetails));
-    }
+//    @CrossOrigin(origins = "http://ptvescort.com", maxAge = 3600)
+//    @PostMapping("/createescort")
+//    public ResponseEntity<?> createEscort(@RequestBody EscortDetails escortDetails){
+//        return ResponseEntity.ok(adminService.createNewEscort(escortDetails));
+//    }
 
     @CrossOrigin(origins = "http://ptvescort.com", maxAge = 3600)
     @GetMapping("/getallescort")
@@ -74,6 +78,26 @@ public class AdminController {
         return ResponseEntity.ok(adminService.getListOfEscortsWithCategory(details.getCategory()));
     }
 
+    @CrossOrigin(origins = "http://ptvescort.com", maxAge = 3600)
+    @RequestMapping(value = "/createescort", method = RequestMethod.POST, consumes = { "multipart/form-data" })
+    public EscortDetails saveUser(@RequestParam String name,
+                                  @RequestParam String location,
+                                  @RequestParam String phoneNumber,
+                                  @RequestParam String email,
+                                  @RequestParam String category,
+                                  @RequestParam String description,
+                                 @RequestParam("image") MultipartFile multipartFile) throws IOException {
+
+        String fileName = StringUtils.cleanPath(multipartFile.getOriginalFilename());
+
+        EscortDetails savedUser = adminService.createNewEscort(name,location,phoneNumber,email,category,description,fileName);
+
+        String uploadDir = "user-photos/" + savedUser.getId();
+
+        FileUploadUtil.saveFile(uploadDir, fileName, multipartFile);
+
+        return savedUser;
+    }
 
 //    @CrossOrigin(origins = "http://ptvescort.com", maxAge = 3600)
 //    @GetMapping("/list/all/category/foradmin")

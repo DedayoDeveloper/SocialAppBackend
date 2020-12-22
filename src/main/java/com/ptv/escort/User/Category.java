@@ -1,14 +1,15 @@
 package com.ptv.escort.User;
 
 public enum Category {
+
+
     Relationship,
-    FriendsWithBenefits,
-    SexHookup,
-    SugarDaddy,
+    FriendWithBenefit,
+    SexHookUp,
     SugarMummy,
+    SugarDaddy,
     Strippers,
     PartyStarters;
-
 
 
 }
