@@ -94,7 +94,7 @@ public class AdminService {
         if (escortPaymentDetails.isPaymentConfirmed() == false){
             getEscortDetails.setEmail(null);
             getEscortDetails.setPhoneNumber(null);
-            return new PaymentResponse(getEscortDetails, getDetails);
+            return new PaymentResponse(getEscortDetails, escortPaymentDetails);
         } else
 
         return new PaymentResponse(getEscortDetails, getDetails);
