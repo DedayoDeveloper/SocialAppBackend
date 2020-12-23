@@ -3,6 +3,7 @@ package com.ptv.escort.User;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonProperty;
+import com.ptv.escort.Admin.EscortPaymentDetails;
 
 import javax.persistence.*;
 
@@ -13,6 +14,7 @@ public class User {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private long id;
+
 
     @Column(name = "firstname")
     private String firstname;
@@ -109,4 +111,5 @@ public class User {
     public void setSex(String sex) {
         this.sex = sex;
     }
+
 }

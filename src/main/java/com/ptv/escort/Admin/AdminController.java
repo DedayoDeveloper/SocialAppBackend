@@ -1,6 +1,8 @@
 package com.ptv.escort.Admin;
 
 
+import com.fasterxml.jackson.databind.JsonNode;
+import com.fasterxml.jackson.databind.node.ObjectNode;
 import com.ptv.escort.Config.JwtResponse;
 import com.ptv.escort.Config.JwtUtil;
 import com.ptv.escort.Config.UserVerification;
@@ -117,6 +119,20 @@ public class AdminController {
     @PostMapping("/get/escort/details/{id}")
     public ResponseEntity<?> getEscortDetails(@PathVariable("id") long id){
         return ResponseEntity.ok(adminService.getEscortDetails(id));
+
+    }
+
+
+    @CrossOrigin(origins = "http://ptvescort.com", maxAge = 3600)
+    @PostMapping("/confirm/paymentdetails/for/escort")
+    public ResponseEntity<?> getPaymentDetails(@RequestBody ObjectNode user){
+        logger.info("WE GOT HERE!!!");
+        JsonNode userId = user.get("user");
+        long idOfUser = userId.asLong();
+
+        JsonNode escortId = user.get("escort");
+        long idOfEscort = escortId.asLong();
+     return ResponseEntity.ok(adminService.confirmUserEscortPaymentDetails(idOfUser,idOfEscort));
 
     }
 

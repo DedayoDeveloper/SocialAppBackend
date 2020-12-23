@@ -1,5 +1,6 @@
 package com.ptv.escort.Admin;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import org.hibernate.annotations.Where;
 
 import javax.persistence.*;
@@ -12,6 +13,7 @@ public class EscortDetails {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private long id;
+
 
     @Column(name = "name")
     private String name;
@@ -112,4 +114,5 @@ public class EscortDetails {
     public void setDescription(String description) {
         this.description = description;
     }
+
 }

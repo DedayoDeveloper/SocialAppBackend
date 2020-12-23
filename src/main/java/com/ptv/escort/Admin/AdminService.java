@@ -1,6 +1,7 @@
 package com.ptv.escort.Admin;
 
 
+import com.ptv.escort.Response.PaymentResponse;
 import com.ptv.escort.User.User;
 import com.ptv.escort.User.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -22,6 +23,9 @@ public class AdminService {
 
     @Autowired
     private EscortRepository escortReposiroty;
+
+    @Autowired
+    private EPDRepository epdRepository;
 
 
     public User loginAdmin(User user){
@@ -75,5 +79,24 @@ public class AdminService {
 
     public EscortDetails getEscortDetails(long id) {
         return escortReposiroty.findEscortDetailsById(id);
+    }
+
+    public PaymentResponse confirmUserEscortPaymentDetails(long userId,long escortId) {
+        EscortPaymentDetails escortPaymentDetails = new EscortPaymentDetails();
+        EscortDetails getEscortDetails = escortReposiroty.findEscortDetailsById(escortId);
+        EscortPaymentDetails getDetails = epdRepository.findByUserAndEscort(userId, escortId);
+        if (getDetails == null){
+            escortPaymentDetails.setUser(userId);
+            escortPaymentDetails.setEscort(escortId);
+            escortPaymentDetails.setPaymentConfirmed(false);
+            epdRepository.save(escortPaymentDetails);
+        }
+        if (escortPaymentDetails.isPaymentConfirmed() == false){
+            getEscortDetails.setEmail(null);
+            getEscortDetails.setPhoneNumber(null);
+            return new PaymentResponse(getEscortDetails, getDetails);
+        } else
+
+        return new PaymentResponse(getEscortDetails, getDetails);
     }
 }
