@@ -39,6 +39,9 @@ public class User {
     @Column(name = "sex")
     private String sex;
 
+    @Column(name = "registration_payment")
+    private boolean registrationPayment;
+
 
     public long getId() {
         return id;
@@ -112,4 +115,12 @@ public class User {
         this.sex = sex;
     }
 
+
+    public boolean isRegistrationPayment() {
+        return registrationPayment;
+    }
+
+    public void setRegistrationPayment(boolean registrationPayment) {
+        this.registrationPayment = registrationPayment;
+    }
 }

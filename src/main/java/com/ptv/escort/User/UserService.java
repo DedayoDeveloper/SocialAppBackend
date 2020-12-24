@@ -47,6 +47,7 @@ public class UserService {
             createUser.setPassword(passwordencoder.encode(user.getPassword()));
             createUser.setUserRole(user.getUserRole());
             createUser.setSex(user.getSex());
+            createUser.setRegistrationPayment(false);
             userRepository.save(createUser);
             return createUser;
 
@@ -74,6 +75,14 @@ public class UserService {
 
     public List<User> getListOfAllUsers() {
         return userRepository.findAll();
+    }
+
+    public String updateRegistrationPayment(long id) {
+        int updateRegistrationPayment = userRepository.updateRegistrationPayment(id);
+        if (updateRegistrationPayment < 0){
+            throw new RuntimeException("Registration payment failed!");
+        }
+        return "Payment registration successful";
     }
 
 //    public List<User> findAllUsersByCategory(String category) {

@@ -92,4 +92,10 @@ public class UserController {
         return ResponseEntity.ok(Category.values());
     }
 
+    @CrossOrigin(origins = "http://ptvescort.com", maxAge = 3600)
+    @PostMapping("/update/registration/payment/{id}")
+    public ResponseEntity<?> updatePayment(@PathVariable("id") long id){
+        return ResponseEntity.ok(userService.updateRegistrationPayment(id));
+    }
+
 }
