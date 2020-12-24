@@ -2,6 +2,8 @@ package com.ptv.escort.User;
 
 
 import com.ptv.escort.Admin.EscortRepository;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -23,20 +25,31 @@ public class UserService {
     private EscortRepository escortReposiroty;
 
 
+    private static final Logger logger = LoggerFactory.getLogger(UserService.class);
 
 
     public User createUser(User user){
-        User createUser = new User();
-        createUser.setFirstname(user.getFirstname());
-        createUser.setLastname(user.getLastname());
-        createUser.setEmail(user.getEmail());
-        createUser.setUsername(user.getUsername());
-        createUser.setCategory(user.getCategory());
-        createUser.setPassword(passwordencoder.encode(user.getPassword()));
-        createUser.setUserRole(user.getUserRole());
-        createUser.setSex(user.getSex());
-        userRepository.save(createUser);
-        return createUser;
+
+        User checkUser = userRepository.findByEmail(user.getEmail());
+        if (checkUser != null){
+            throw new RuntimeException("Email registered to an existing user");
+        }
+        User checkUsername = userRepository.findByUsername(user.getUsername());
+        if (checkUsername != null){
+            throw new RuntimeException("Username not available");
+        }
+            User createUser = new User();
+            createUser.setFirstname(user.getFirstname());
+            createUser.setLastname(user.getLastname());
+            createUser.setEmail(user.getEmail());
+            createUser.setUsername(user.getUsername());
+            createUser.setCategory(user.getCategory());
+            createUser.setPassword(passwordencoder.encode(user.getPassword()));
+            createUser.setUserRole(user.getUserRole());
+            createUser.setSex(user.getSex());
+            userRepository.save(createUser);
+            return createUser;
+
     }
 
 
