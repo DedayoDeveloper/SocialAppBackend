@@ -6,6 +6,7 @@
 //
 //import com.ptv.escort.Response.ApiResponse;
 //import org.springframework.http.HttpStatus;
+//import org.springframework.http.ResponseEntity;
 //import org.springframework.web.bind.annotation.ControllerAdvice;
 //import org.springframework.web.bind.annotation.ExceptionHandler;
 //import org.springframework.web.bind.annotation.ResponseBody;
@@ -17,14 +18,14 @@
 //
 //    @ExceptionHandler(RuntimeException.class)
 //    @ResponseBody
-//    public ApiResponse<String> springHandleNotFound(HttpServletResponse response, Exception ex) throws IOException {
-//        ApiResponse<String> error = new ApiResponse<>();
-//        error.setResponse(ex.getMessage());
-//        error.setStatus(HttpStatus.INTERNAL_SERVER_ERROR);
-//        error.setMessage(ex.getMessage());
-//        error.setError("Error Found");
-//        error.setResponsecode("99");
-//        return error;
+//    public ResponseEntity<?> springHandleNotFound(HttpServletResponse response, Exception ex) throws IOException {
+////        ApiResponse<String> error = new ApiResponse<>();
+////        error.setResponse(response.getStatus());
+////        error.setStatus(HttpStatus.INTERNAL_SERVER_ERROR);
+////        error.setMessage(ex.getMessage());
+////        error.setError("Error Found");
+////        error.setResponsecode("99");
+//        return ResponseEntity.ok(error);
 //    }
 //
 //}
