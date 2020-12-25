@@ -10,6 +10,7 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Optional;
 
 @Service
 public class UserService {
@@ -77,12 +78,16 @@ public class UserService {
         return userRepository.findAll();
     }
 
-    public String updateRegistrationPayment(long id) {
+    public  Optional<User> updateRegistrationPayment(long id) {
         int updateRegistrationPayment = userRepository.updateRegistrationPayment(id);
+        Optional<User> user = userRepository.findById(id);
         if (updateRegistrationPayment < 0){
             throw new RuntimeException("Registration payment failed!");
         }
-        return "Payment registration successful";
+        if (!user.isPresent()){
+            throw new RuntimeException("User not available");
+        }
+        return user;
     }
 
 //    public List<User> findAllUsersByCategory(String category) {
