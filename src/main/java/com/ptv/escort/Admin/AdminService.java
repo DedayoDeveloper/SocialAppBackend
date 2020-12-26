@@ -66,7 +66,15 @@ public class AdminService {
    }
 
     public List<EscortDetails> getListOfEscortsWithCategory(String category) {
-        return escortReposiroty.findAllByCategory(category);
+        List<EscortDetails> escorts = escortReposiroty.findAllByCategory(category);
+        escorts.forEach(escortDetails -> {
+             escortDetails.setPhoneNumber(null);
+             escortDetails.setEmail(null);
+             escortDetails.setName(null);
+
+        });
+
+        return escorts;
     }
 
     public int deleteEscort(long id) {
