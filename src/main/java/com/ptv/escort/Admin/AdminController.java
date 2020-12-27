@@ -136,4 +136,15 @@ public class AdminController {
 
     }
 
+    @PostMapping("/update/escort/payment")
+    public ResponseEntity<?> updatePaymentDetails(@RequestBody ObjectNode user){
+        logger.info("WE GOT HERE!!!");
+        JsonNode userId = user.get("user");
+        long idOfUser = userId.asLong();
+
+        JsonNode escortId = user.get("escort");
+        long idOfEscort = escortId.asLong();
+        return ResponseEntity.ok(adminService.updateEscortPayment(idOfUser,idOfEscort));
+    }
+
 }

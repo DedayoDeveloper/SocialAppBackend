@@ -71,9 +71,7 @@ public class AdminService {
              escortDetails.setPhoneNumber(null);
              escortDetails.setEmail(null);
              escortDetails.setName(null);
-
         });
-
         return escorts;
     }
 
@@ -106,5 +104,13 @@ public class AdminService {
         } else
 
         return new PaymentResponse(getEscortDetails, getDetails);
+    }
+
+    public String updateEscortPayment(long idOfUser, long idOfEscort) {
+        int update = epdRepository.updateEscortPayment(idOfUser,idOfEscort);
+        if (update < 1){
+            throw new RuntimeException("Payment update failed, Please try again later!");
+        }
+        return "Payment update successfull!";
     }
 }
