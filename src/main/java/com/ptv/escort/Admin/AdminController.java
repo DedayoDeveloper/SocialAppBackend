@@ -27,7 +27,7 @@ import java.io.IOException;
 
 
 @RestController
-//@CrossOrigin(origins = "http://ptvescort.com", maxAge = 3600)
+@CrossOrigin(origins = "http://localhost:3000", maxAge = 3600)
 public class AdminController {
 
 
