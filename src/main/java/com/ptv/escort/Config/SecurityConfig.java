@@ -62,7 +62,6 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter{
                 "/createUser",
                 "/listallcategory",
                 "/update/registration/payment/{id}",
-                "/user-photos/**",
                 "/admin/authenticate").permitAll().anyRequest().authenticated().and().exceptionHandling()
                 .authenticationEntryPoint(jwtAuthenticationEntryPoint)
                 .and().sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS);

@@ -20,6 +20,7 @@ import org.springframework.security.core.userdetails.UserDetails;
 
 //@CrossOrigin(origins = "*")
 @RestController
+@CrossOrigin(origins = "*", maxAge = 3600)
 public class UserController {
 
 
@@ -39,7 +40,7 @@ public class UserController {
 
     private static final Logger logger = LoggerFactory.getLogger(UserController.class);
 
-    @CrossOrigin(origins = "http://ptvescort.com", maxAge = 3600)
+
     @RequestMapping(value = "/authenticate", method = RequestMethod.POST)
     public ResponseEntity<?> createAuthenticationToken(@RequestBody User authenticationRequest) throws Exception {
 
@@ -49,16 +50,12 @@ public class UserController {
         }
         User user = userService.login(authenticationRequest);
         user.setPassword(null);
-
 //        try{
 //            ObjectMapper mapper = new ObjectMapper();
 //            logger.info(mapper.writeValueAsString(user));
 //        }catch (Exception e){
 //
 //        }
-
-
-
         logger.info("user details {}", user);
         final String jwt = jwttokenutil.generateToken(userDetails);
         logger.info(jwt);
@@ -66,14 +63,14 @@ public class UserController {
     }
 
 
-    @CrossOrigin(origins = "http://ptvescort.com", maxAge = 3600)
+
     @PostMapping("/createUser")
     public ResponseEntity<?> createUser(@RequestBody User user){
         return ResponseEntity.ok(userService.createUser(user));
     }
 
 
-    @CrossOrigin(origins = "http://ptvescort.com", maxAge = 3600)
+
     @GetMapping("/allusers")
     public ResponseEntity<?> getAllUsers(){
         return ResponseEntity.ok(userService.getListOfAllUsers());
@@ -85,14 +82,14 @@ public class UserController {
 //        return ResponseEntity.ok(userService.findAllUsersByCategory(category));
 //    }
 
-    @CrossOrigin(origins = "http://ptvescort.com", maxAge = 3600)
+
     @GetMapping("/listallcategory")
     public ResponseEntity<?> listAllCategories(){
         logger.info("WE GOT HERE!!!!");
         return ResponseEntity.ok(Category.values());
     }
 
-    @CrossOrigin(origins = "http://ptvescort.com", maxAge = 3600)
+
     @PostMapping("/update/registration/payment/{id}")
     public ResponseEntity<?> updatePayment(@PathVariable("id") long id){
         return ResponseEntity.ok(userService.updateRegistrationPayment(id));

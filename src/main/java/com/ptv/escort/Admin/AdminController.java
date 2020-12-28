@@ -22,8 +22,9 @@ import org.springframework.web.servlet.view.RedirectView;
 
 import java.io.IOException;
 
-//@CrossOrigin(origins = "*")
+
 @RestController
+@CrossOrigin(origins = "*", maxAge = 3600)
 public class AdminController {
 
 
@@ -45,7 +46,7 @@ public class AdminController {
     private static final Logger logger = LoggerFactory.getLogger(UserController.class);
 
 
-    @CrossOrigin(origins = "http://ptvescort.com", maxAge = 3600)
+
     @RequestMapping(value = "/admin/authenticate", method = RequestMethod.POST)
     public ResponseEntity<?> createAuthenticationToken(@RequestBody User authenticationRequest) throws Exception {
 
@@ -67,20 +68,21 @@ public class AdminController {
 //        return ResponseEntity.ok(adminService.createNewEscort(escortDetails));
 //    }
 
-    @CrossOrigin(origins = "http://ptvescort.com", maxAge = 3600)
+
+
     @GetMapping("/getallescort")
     public ResponseEntity<?> getListOfAllEscort(){
         return ResponseEntity.ok(adminService.getListOfAllEscorts());
     }
 
 
-    @CrossOrigin(origins = "http://ptvescort.com", maxAge = 3600)
+
     @PostMapping("/EscortList/WithCategory")
     public ResponseEntity<?> getListOfEscortsWithCategory(@RequestBody EscortDetails details){
         return ResponseEntity.ok(adminService.getListOfEscortsWithCategory(details.getCategory()));
     }
 
-    @CrossOrigin(origins = "http://ptvescort.com", maxAge = 3600)
+
     @RequestMapping(value = "/createescort", method = RequestMethod.POST, consumes = { "multipart/form-data" })
     public EscortDetails saveUser(@RequestParam String name,
                                   @RequestParam String location,
@@ -109,13 +111,13 @@ public class AdminController {
 
 
 
-    @CrossOrigin(origins = "http://ptvescort.com", maxAge = 3600)
+
     @DeleteMapping("/delete/escort/{id}")
     public int deleteEscort(@PathVariable("id") long id){
         return adminService.deleteEscort(id);
     }
 
-    @CrossOrigin(origins = "http://ptvescort.com", maxAge = 3600)
+
     @PostMapping("/get/escort/details/{id}")
     public ResponseEntity<?> getEscortDetails(@PathVariable("id") long id){
         return ResponseEntity.ok(adminService.getEscortDetails(id));
@@ -123,7 +125,7 @@ public class AdminController {
     }
 
 
-    @CrossOrigin(origins = "http://ptvescort.com", maxAge = 3600)
+
     @PostMapping("/confirm/paymentdetails/for/escort")
     public ResponseEntity<?> getPaymentDetails(@RequestBody ObjectNode user){
         logger.info("WE GOT HERE!!!");
@@ -135,6 +137,7 @@ public class AdminController {
      return ResponseEntity.ok(adminService.confirmUserEscortPaymentDetails(idOfUser,idOfEscort));
 
     }
+
 
     @PostMapping("/update/escort/payment")
     public ResponseEntity<?> updatePaymentDetails(@RequestBody ObjectNode user){
