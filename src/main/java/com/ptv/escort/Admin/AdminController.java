@@ -86,8 +86,8 @@ public class AdminController {
 
 
     @PostMapping("/EscortList/WithCategory")
-    public ResponseEntity<?> getListOfEscortsWithCategory(@RequestBody CategoryName category){
-        return ResponseEntity.ok(adminService.getListOfEscortsWithCategory(category));
+    public ResponseEntity<?> getListOfEscortsWithCategory(@RequestBody Category category){
+        return ResponseEntity.ok(adminService.getListOfEscortsWithCategory(category.getCategoryName()));
     }
 
 
