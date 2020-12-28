@@ -23,7 +23,7 @@ import org.springframework.security.core.userdetails.UserDetails;
 
 //@CrossOrigin(origins = "*")
 @RestController
-@CrossOrigin(origins = "http://ptvescort.com", maxAge = 3600)
+//@CrossOrigin(origins = "http://ptvescort.com", maxAge = 3600)
 public class UserController {
 
 
