@@ -1,6 +1,7 @@
 package com.ptv.escort.Admin;
 
 
+import com.ptv.escort.Category.CategoryName;
 import com.ptv.escort.Response.PaymentResponse;
 import com.ptv.escort.User.User;
 import com.ptv.escort.User.UserRepository;
@@ -46,8 +47,8 @@ public class AdminService {
     }
 
 
-    public EscortDetails createNewEscort(String name,String location,String phoneNumber,String email
-            ,String category,String description, String fileName){
+    public EscortDetails createNewEscort(String name, String location, String phoneNumber, String email
+            , CategoryName category, String description, String fileName){
         EscortDetails ed = new EscortDetails();
         ed.setEmail(email);
         ed.setCategory(category);
@@ -65,7 +66,7 @@ public class AdminService {
         return escortReposiroty.findAll();
    }
 
-    public List<EscortDetails> getListOfEscortsWithCategory(String category) {
+    public List<EscortDetails> getListOfEscortsWithCategory(CategoryName category) {
         List<EscortDetails> escorts = escortReposiroty.findAllByCategory(category);
         escorts.forEach(escortDetails -> {
              escortDetails.setPhoneNumber(null);

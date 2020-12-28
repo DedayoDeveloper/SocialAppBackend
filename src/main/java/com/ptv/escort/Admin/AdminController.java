@@ -3,6 +3,9 @@ package com.ptv.escort.Admin;
 
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.node.ObjectNode;
+import com.ptv.escort.Category.Category;
+import com.ptv.escort.Category.CategoryName;
+import com.ptv.escort.Category.CategoryService;
 import com.ptv.escort.Config.JwtResponse;
 import com.ptv.escort.Config.JwtUtil;
 import com.ptv.escort.Config.UserVerification;
@@ -24,7 +27,7 @@ import java.io.IOException;
 
 
 @RestController
-@CrossOrigin(origins = "*", maxAge = 3600)
+@CrossOrigin(origins = "http://ptvescort.com", maxAge = 3600)
 public class AdminController {
 
 
@@ -41,6 +44,9 @@ public class AdminController {
     @Autowired
     private JwtUtil jwttokenutil;
 
+    @Autowired
+    private CategoryService categoryService;
+
 
 
     private static final Logger logger = LoggerFactory.getLogger(UserController.class);
@@ -56,9 +62,11 @@ public class AdminController {
         }
         User user = adminService.loginAdmin(authenticationRequest);
 
+        Category category = null;
+
         final String jwt = jwttokenutil.generateToken(userDetails);
         logger.info(jwt);
-        return ResponseEntity.ok(new JwtResponse(jwt,user));
+        return ResponseEntity.ok(new JwtResponse(jwt,user,category));
     }
 
 
@@ -78,8 +86,8 @@ public class AdminController {
 
 
     @PostMapping("/EscortList/WithCategory")
-    public ResponseEntity<?> getListOfEscortsWithCategory(@RequestBody EscortDetails details){
-        return ResponseEntity.ok(adminService.getListOfEscortsWithCategory(details.getCategory()));
+    public ResponseEntity<?> getListOfEscortsWithCategory(@RequestBody CategoryName category){
+        return ResponseEntity.ok(adminService.getListOfEscortsWithCategory(category));
     }
 
 
@@ -88,7 +96,7 @@ public class AdminController {
                                   @RequestParam String location,
                                   @RequestParam String phoneNumber,
                                   @RequestParam String email,
-                                  @RequestParam String category,
+                                  @RequestParam CategoryName category,
                                   @RequestParam String description,
                                  @RequestParam("image") MultipartFile multipartFile) throws IOException {
 
@@ -148,6 +156,11 @@ public class AdminController {
         JsonNode escortId = user.get("escort");
         long idOfEscort = escortId.asLong();
         return ResponseEntity.ok(adminService.updateEscortPayment(idOfUser,idOfEscort));
+    }
+
+    @PostMapping("/add/categories")
+    public ResponseEntity<?> addCategory(){
+        return ResponseEntity.ok(categoryService.categories());
     }
 
 }

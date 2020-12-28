@@ -1,6 +1,7 @@
 package com.ptv.escort.Admin;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.ptv.escort.Category.CategoryName;
 import org.hibernate.annotations.Where;
 
 import javax.persistence.*;
@@ -23,8 +24,11 @@ public class EscortDetails {
     private String phoneNumber;
     @Column(name = "email")
     private String email;
+
+
+    @Enumerated(EnumType.STRING)
     @Column(name = "category")
-    private String category;
+    private CategoryName category;
 
     @Column(name = "photos")
     private String photos;
@@ -91,11 +95,11 @@ public class EscortDetails {
         this.email = email;
     }
 
-    public String getCategory() {
+    public CategoryName getCategory() {
         return category;
     }
 
-    public void setCategory(String category) {
+    public void setCategory(CategoryName category) {
         this.category = category;
     }
 

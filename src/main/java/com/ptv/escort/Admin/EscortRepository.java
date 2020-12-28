@@ -1,5 +1,6 @@
 package com.ptv.escort.Admin;
 
+import com.ptv.escort.Category.CategoryName;
 import com.ptv.escort.User.User;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -16,7 +17,7 @@ import java.util.List;
 public interface EscortRepository extends JpaRepository<EscortDetails, Long> {
 
 //    @Query("select e.id, e.description, e.location from EscortDetails e where e.category = :category")
-    List<EscortDetails> findAllByCategory(String category);
+    List<EscortDetails> findAllByCategory(CategoryName category);
 
 
     @Modifying

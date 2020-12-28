@@ -4,6 +4,7 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.ptv.escort.Admin.EscortPaymentDetails;
+import com.ptv.escort.Category.CategoryName;
 
 import javax.persistence.*;
 
@@ -30,8 +31,9 @@ public class User {
     private String password;
 
 
+    @Enumerated(EnumType.STRING)
     @Column(name = "category")
-    private String category;
+    private CategoryName category;
 
     @Column(name = "user_role")
     private String userRole;
@@ -91,11 +93,11 @@ public class User {
         this.password = password;
     }
 
-    public String getCategory() {
+    public CategoryName getCategory() {
         return category;
     }
 
-    public void setCategory(String category) {
+    public void setCategory(CategoryName category) {
         this.category = category;
     }
 

@@ -2,6 +2,9 @@ package com.ptv.escort.User;
 
 
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.ptv.escort.Category.Category;
+import com.ptv.escort.Category.CategoryName;
+import com.ptv.escort.Category.CategoryRepository;
 import com.ptv.escort.Config.JwtResponse;
 import com.ptv.escort.Config.JwtUtil;
 import com.ptv.escort.Config.UserVerification;
@@ -20,7 +23,7 @@ import org.springframework.security.core.userdetails.UserDetails;
 
 //@CrossOrigin(origins = "*")
 @RestController
-@CrossOrigin(origins = "*", maxAge = 3600)
+@CrossOrigin(origins = "http://ptvescort.com", maxAge = 3600)
 public class UserController {
 
 
@@ -36,6 +39,9 @@ public class UserController {
     @Autowired
     private JwtUtil jwttokenutil;
 
+    @Autowired
+    private CategoryRepository categoryRepository;
+
 
 
     private static final Logger logger = LoggerFactory.getLogger(UserController.class);
@@ -50,6 +56,7 @@ public class UserController {
         }
         User user = userService.login(authenticationRequest);
         user.setPassword(null);
+        Category category = categoryRepository.findByCategoryName(user.getCategory());
 //        try{
 //            ObjectMapper mapper = new ObjectMapper();
 //            logger.info(mapper.writeValueAsString(user));
@@ -59,7 +66,7 @@ public class UserController {
         logger.info("user details {}", user);
         final String jwt = jwttokenutil.generateToken(userDetails);
         logger.info(jwt);
-        return ResponseEntity.ok(new JwtResponse(jwt,user));
+        return ResponseEntity.ok(new JwtResponse(jwt,user,category));
     }
 
 
@@ -86,7 +93,7 @@ public class UserController {
     @GetMapping("/listallcategory")
     public ResponseEntity<?> listAllCategories(){
         logger.info("WE GOT HERE!!!!");
-        return ResponseEntity.ok(Category.values());
+        return ResponseEntity.ok(CategoryName.values());
     }
 
 
