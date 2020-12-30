@@ -55,4 +55,7 @@ public class CategoryService {
         return "successful";
     }
 
+    public Category getCategoryDetails(CategoryName categoryName) {
+        return categoryRepository.findByCategoryName(categoryName);
+    }
 }

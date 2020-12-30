@@ -163,4 +163,10 @@ public class AdminController {
         return ResponseEntity.ok(categoryService.categories());
     }
 
+
+    @GetMapping("/get/category/details")
+    public ResponseEntity<?> getCategoryDetails(@RequestBody Category categoryName){
+        return ResponseEntity.ok(categoryService.getCategoryDetails(categoryName.getCategoryName()));
+    }
+
 }
