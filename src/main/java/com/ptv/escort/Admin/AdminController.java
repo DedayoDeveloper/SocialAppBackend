@@ -164,7 +164,7 @@ public class AdminController {
     }
 
 
-    @GetMapping("/get/category/details")
+    @PostMapping("/get/category/details")
     public ResponseEntity<?> getCategoryDetails(@RequestBody Category categoryName){
         return ResponseEntity.ok(categoryService.getCategoryDetails(categoryName.getCategoryName()));
     }
