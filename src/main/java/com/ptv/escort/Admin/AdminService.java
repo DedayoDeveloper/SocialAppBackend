@@ -98,10 +98,10 @@ public class AdminService {
             escortPaymentDetails.setPaymentConfirmed(false);
             epdRepository.save(escortPaymentDetails);
         }
-        if (escortPaymentDetails.isPaymentConfirmed() == false){
+        if (getDetails.isPaymentConfirmed() == false){
             getEscortDetails.setEmail(null);
             getEscortDetails.setPhoneNumber(null);
-            return new PaymentResponse(getEscortDetails, escortPaymentDetails);
+            return new PaymentResponse(getEscortDetails, getDetails);
         } else
 
         return new PaymentResponse(getEscortDetails, getDetails);

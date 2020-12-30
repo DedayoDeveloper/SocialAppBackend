@@ -169,4 +169,10 @@ public class AdminController {
         return ResponseEntity.ok(categoryService.getCategoryDetails(categoryName.getCategoryName()));
     }
 
+
+    @GetMapping("/user-photos/{id}/{photos}")
+    public ResponseEntity<?> getImage(@PathVariable("id") long id, @PathVariable("photos") String photos){
+        return ResponseEntity.ok("user-photos/" + id + "/" + photos);
+    }
+
 }
