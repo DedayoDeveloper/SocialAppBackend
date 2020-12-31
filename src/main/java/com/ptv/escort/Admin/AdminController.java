@@ -15,15 +15,25 @@ import com.ptv.escort.Utils.FileUploadUtil;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.ResponseEntity;
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.core.io.ClassPathResource;
+import org.springframework.http.*;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.util.StreamUtils;
 import org.springframework.util.StringUtils;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
-import org.springframework.web.servlet.view.RedirectView;
 
+import javax.servlet.ServletContext;
+import javax.servlet.http.HttpSession;
 import java.io.IOException;
+import java.io.InputStream;
+import java.nio.file.Path;
+
+import org.apache.commons.io.IOUtils;
+
+//import org.omg.CORBA.portable.InputStream;
 
 
 @RestController
@@ -31,6 +41,8 @@ import java.io.IOException;
 public class AdminController {
 
 
+//    @Value("${uploadDir}")
+//    private String uploadDir;
 
     @Autowired
     private AuthenticationManager authenticationmanager;
@@ -46,6 +58,9 @@ public class AdminController {
 
     @Autowired
     private CategoryService categoryService;
+
+    @Autowired
+    ServletContext servletContext;
 
 
 
@@ -98,15 +113,22 @@ public class AdminController {
                                   @RequestParam String email,
                                   @RequestParam CategoryName category,
                                   @RequestParam String description,
-                                 @RequestParam("image") MultipartFile multipartFile) throws IOException {
+                                  @RequestParam("image") MultipartFile multipartFile, HttpSession session) throws IOException {
 
         String fileName = StringUtils.cleanPath(multipartFile.getOriginalFilename());
 
+
+
         EscortDetails savedUser = adminService.createNewEscort(name,location,phoneNumber,email,category,description,fileName);
 
-        String uploadDir = "user-photos/" + savedUser.getId();
+//        logger.info("upload directory {}", uploadDir);
 
-        FileUploadUtil.saveFile(uploadDir, fileName, multipartFile);
+        String uploadDir = "./src/main/resources/user-photos/" + savedUser.getId();
+
+//        String uploadDir = new ClassPathResource("/user-photos/" + savedUser.getId()).toString();
+        logger.info("classpath {}", uploadDir);
+
+        FileUploadUtil.saveFile(uploadDir , fileName, multipartFile);
 
         return savedUser;
     }
@@ -164,15 +186,27 @@ public class AdminController {
     }
 
 
-    @PostMapping("/get/category/details")
+    @PostMapping(value = "/get/category/details")
     public ResponseEntity<?> getCategoryDetails(@RequestBody Category categoryName){
         return ResponseEntity.ok(categoryService.getCategoryDetails(categoryName.getCategoryName()));
     }
 
+//
 
-    @GetMapping("/user-photos/{id}/{photos}")
-    public ResponseEntity<?> getImage(@PathVariable("id") long id, @PathVariable("photos") String photos){
-        return ResponseEntity.ok("user-photos/" + id + "/" + photos);
+    @RequestMapping(value = "/user-photos/{id}/{photos}", method = RequestMethod.GET, produces = MediaType.IMAGE_JPEG_VALUE)
+    public ResponseEntity<byte[]> getImage(@PathVariable("id") long id, @PathVariable("photos") String photos) throws IOException {
+
+        InputStream in = servletContext.getResourceAsStream("/user-photos/" + id + "/" + photos);
+        logger.info("in {}", in);
+        ClassPathResource imgFile = new ClassPathResource("/user-photos/" + id + "/" + photos);
+//        byte[] bytes = StreamUtils.copyToByteArray(imgFile.getInputStream());
+        byte[] bytes = IOUtils.toByteArray(imgFile.getInputStream());
+
+
+        return ResponseEntity
+                .ok()
+                .contentType(MediaType.IMAGE_JPEG)
+                .body(bytes);
     }
 
 }
