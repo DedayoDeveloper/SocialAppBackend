@@ -19,13 +19,13 @@ public class UserVerification implements UserDetailsService{
     private UserRepository userRepository;
 
     @Override
-    public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
+    public UserDetails loadUserByUsername(String email) throws UsernameNotFoundException {
 
-//        User user = userRepository.findByUsername(username);
+        User user = userRepository.findByEmail(email);
 
-//        if(user == null )
-//            throw new UsernameNotFoundException("User Not Found " + username);
-        return new org.springframework.security.core.userdetails.User("test", "test",
+        if(user == null )
+            throw new UsernameNotFoundException("User Not Found " + email);
+        return new org.springframework.security.core.userdetails.User(user.getEmail(), user.getPassword(),
                 new ArrayList<>());
 //    }
 }

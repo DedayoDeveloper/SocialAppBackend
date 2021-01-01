@@ -17,12 +17,14 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.core.io.ClassPathResource;
+import org.springframework.core.io.Resource;
 import org.springframework.http.*;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.util.StreamUtils;
 import org.springframework.util.StringUtils;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.context.support.ServletContextResource;
 import org.springframework.web.multipart.MultipartFile;
 
 import javax.servlet.ServletContext;
@@ -118,8 +120,9 @@ public class AdminController {
         String fileName = StringUtils.cleanPath(multipartFile.getOriginalFilename());
 
 
+        String image = FileUploadUtil.saveFile2(fileName, multipartFile);
 
-        EscortDetails savedUser = adminService.createNewEscort(name,location,phoneNumber,email,category,description,fileName);
+        EscortDetails savedUser = adminService.createNewEscort(name,location,phoneNumber,email,category,description,image);
 
 //        logger.info("upload directory {}", uploadDir);
 
@@ -128,7 +131,7 @@ public class AdminController {
 //        String uploadDir = new ClassPathResource("/user-photos/" + savedUser.getId()).toString();
         logger.info("classpath {}", uploadDir);
 
-        FileUploadUtil.saveFile(uploadDir , fileName, multipartFile);
+
 
         return savedUser;
     }
@@ -194,19 +197,29 @@ public class AdminController {
 //
 
     @RequestMapping(value = "/user-photos/{id}/{photos}", method = RequestMethod.GET, produces = MediaType.IMAGE_JPEG_VALUE)
-    public ResponseEntity<byte[]> getImage(@PathVariable("id") long id, @PathVariable("photos") String photos) throws IOException {
-
-        InputStream in = servletContext.getResourceAsStream("/user-photos/" + id + "/" + photos);
-        logger.info("in {}", in);
-        ClassPathResource imgFile = new ClassPathResource("/user-photos/" + id + "/" + photos);
-//        byte[] bytes = StreamUtils.copyToByteArray(imgFile.getInputStream());
-        byte[] bytes = IOUtils.toByteArray(imgFile.getInputStream());
-
-
-        return ResponseEntity
-                .ok()
-                .contentType(MediaType.IMAGE_JPEG)
-                .body(bytes);
+    @ResponseBody
+    public ResponseEntity<Resource> getImageAsResource(@PathVariable("id") String id, @PathVariable("photos") String photos) {
+        HttpHeaders headers = new HttpHeaders();
+        Resource resource =
+                new ServletContextResource(servletContext, "/user-photos/" + id + "/" + photos);
+        return new ResponseEntity<>(resource, headers, HttpStatus.OK);
     }
+
+
+//    public ResponseEntity<byte[]> getImage(@PathVariable("id") long id, @PathVariable("photos") String photos) throws IOException {
+//
+////        InputStream in = servletContext.getResourceAsStream("/user-photos/" + id + "/" + photos);
+////        logger.info("in {}", in);
+////        ClassPathResource imgFile = new ClassPathResource("/user-photos/" + id + "/" + photos);
+//////        byte[] bytes = StreamUtils.copyToByteArray(imgFile.getInputStream());
+////        byte[] bytes = IOUtils.toByteArray(imgFile.getInputStream());
+////
+////
+////        return ResponseEntity
+////                .ok()
+////                .contentType(MediaType.IMAGE_JPEG)
+////                .body(bytes);
+//
+//    }
 
 }

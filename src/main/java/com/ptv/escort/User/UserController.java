@@ -58,12 +58,12 @@ public class UserController {
         User user = userService.login(authenticationRequest);
         user.setPassword(null);
         Category category = categoryRepository.findByCategoryName(user.getCategory());
-//        try{
-//            ObjectMapper mapper = new ObjectMapper();
-//            logger.info(mapper.writeValueAsString(user));
-//        }catch (Exception e){
-//
-//        }
+        try{
+            ObjectMapper mapper = new ObjectMapper();
+            logger.info(mapper.writeValueAsString(user));
+        }catch (Exception e){
+
+        }
         logger.info("user details {}", user);
         final String jwt = jwttokenutil.generateToken(userDetails);
         logger.info(jwt);
