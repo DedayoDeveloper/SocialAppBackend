@@ -9,31 +9,25 @@ import com.ptv.escort.Category.CategoryService;
 import com.ptv.escort.Config.JwtResponse;
 import com.ptv.escort.Config.JwtUtil;
 import com.ptv.escort.Config.UserVerification;
+import com.ptv.escort.Response.ImageFileResponse;
 import com.ptv.escort.User.User;
 import com.ptv.escort.User.UserController;
-import com.ptv.escort.Utils.FileUploadUtil;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Value;
-import org.springframework.core.io.ClassPathResource;
 import org.springframework.core.io.Resource;
 import org.springframework.http.*;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.core.userdetails.UserDetails;
-import org.springframework.util.StreamUtils;
 import org.springframework.util.StringUtils;
 import org.springframework.web.bind.annotation.*;
-import org.springframework.web.context.support.ServletContextResource;
 import org.springframework.web.multipart.MultipartFile;
 
 import javax.servlet.ServletContext;
-import javax.servlet.http.HttpSession;
+import javax.servlet.http.HttpServletRequest;
 import java.io.IOException;
-import java.io.InputStream;
-import java.nio.file.Path;
 
-import org.apache.commons.io.IOUtils;
+import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
 //import org.omg.CORBA.portable.InputStream;
 
@@ -65,6 +59,11 @@ public class AdminController {
     ServletContext servletContext;
 
 
+    @Autowired
+    private FileStorageService fileStorageService;
+
+
+
 
     private static final Logger logger = LoggerFactory.getLogger(UserController.class);
 
@@ -87,14 +86,6 @@ public class AdminController {
     }
 
 
-//    @CrossOrigin(origins = "http://ptvescort.com", maxAge = 3600)
-//    @PostMapping("/createescort")
-//    public ResponseEntity<?> createEscort(@RequestBody EscortDetails escortDetails){
-//        return ResponseEntity.ok(adminService.createNewEscort(escortDetails));
-//    }
-
-
-
     @GetMapping("/getallescort")
     public ResponseEntity<?> getListOfAllEscort(){
         return ResponseEntity.ok(adminService.getListOfAllEscorts());
@@ -108,40 +99,54 @@ public class AdminController {
     }
 
 
-    @RequestMapping(value = "/createescort", method = RequestMethod.POST, consumes = { "multipart/form-data" })
-    public EscortDetails saveUser(@RequestParam String name,
-                                  @RequestParam String location,
-                                  @RequestParam String phoneNumber,
-                                  @RequestParam String email,
-                                  @RequestParam CategoryName category,
-                                  @RequestParam String description,
-                                  @RequestParam("image") MultipartFile multipartFile, HttpSession session) throws IOException {
 
-        String fileName = StringUtils.cleanPath(multipartFile.getOriginalFilename());
+    @PostMapping("/createescort")
+    public ImageFileResponse createEscort(@RequestParam String name,
+                                          @RequestParam String location,
+                                          @RequestParam String phoneNumber,
+                                          @RequestParam String email,
+                                          @RequestParam CategoryName category,
+                                          @RequestParam String description,
+                                          @RequestParam("image") MultipartFile image) {
+        String fileName = StringUtils.cleanPath(image.getOriginalFilename());
 
+        EscortDetails escortDetails = adminService.createNewEscort(name,location,phoneNumber,email,category,description,fileName);
 
-        String image = FileUploadUtil.saveFile2(fileName, multipartFile);
+         fileStorageService.storeFile(image, escortDetails.getId());
 
-        EscortDetails savedUser = adminService.createNewEscort(name,location,phoneNumber,email,category,description,image);
+        String fileDownloadUri = ServletUriComponentsBuilder.fromCurrentContextPath()
+                .path("/downloadFile/" + escortDetails.getId() + "/")
+                .path(fileName)
+                .toUriString();
 
-//        logger.info("upload directory {}", uploadDir);
-
-        String uploadDir = "./src/main/resources/user-photos/" + savedUser.getId();
-
-//        String uploadDir = new ClassPathResource("/user-photos/" + savedUser.getId()).toString();
-        logger.info("classpath {}", uploadDir);
-
-
-
-        return savedUser;
+        return new ImageFileResponse(fileDownloadUri,
+                image.getContentType(), image.getSize(), escortDetails);
     }
 
-//    @CrossOrigin(origins = "http://ptvescort.com", maxAge = 3600)
-//    @GetMapping("/list/all/category/foradmin")
-//    public ResponseEntity<?> listAllCategories(){
-//        return ResponseEntity.ok(Category.values());
-//    }
 
+    @GetMapping("/downloadFile/{id}/{fileName:.+}")
+    public ResponseEntity<Resource> downloadFile(@PathVariable String fileName, @PathVariable("id") long id,  HttpServletRequest request) {
+        // Load file as Resource
+        Resource resource = fileStorageService.loadFileAsResource(fileName,id);
+
+        // Try to determine file's content type
+        String contentType = null;
+        try {
+            contentType = request.getServletContext().getMimeType(resource.getFile().getAbsolutePath());
+        } catch (IOException ex) {
+            logger.info("Could not determine file type.");
+        }
+
+        // Fallback to the default content type if type could not be determined
+        if(contentType == null) {
+            contentType = "application/octet-stream";
+        }
+
+        return ResponseEntity.ok()
+                .contentType(MediaType.parseMediaType(contentType))
+                .header(HttpHeaders.CONTENT_DISPOSITION, "attachment; filename=\"" + resource.getFilename() + "\"")
+                .body(resource);
+    }
 
 
 
@@ -194,32 +199,17 @@ public class AdminController {
         return ResponseEntity.ok(categoryService.getCategoryDetails(categoryName.getCategoryName()));
     }
 
-//
-
-    @RequestMapping(value = "/user-photos/{id}/{photos}", method = RequestMethod.GET, produces = MediaType.IMAGE_JPEG_VALUE)
-    @ResponseBody
-    public ResponseEntity<Resource> getImageAsResource(@PathVariable("id") String id, @PathVariable("photos") String photos) {
-        HttpHeaders headers = new HttpHeaders();
-        Resource resource =
-                new ServletContextResource(servletContext, "/user-photos/" + id + "/" + photos);
-        return new ResponseEntity<>(resource, headers, HttpStatus.OK);
-    }
 
 
-//    public ResponseEntity<byte[]> getImage(@PathVariable("id") long id, @PathVariable("photos") String photos) throws IOException {
-//
-////        InputStream in = servletContext.getResourceAsStream("/user-photos/" + id + "/" + photos);
-////        logger.info("in {}", in);
-////        ClassPathResource imgFile = new ClassPathResource("/user-photos/" + id + "/" + photos);
-//////        byte[] bytes = StreamUtils.copyToByteArray(imgFile.getInputStream());
-////        byte[] bytes = IOUtils.toByteArray(imgFile.getInputStream());
-////
-////
-////        return ResponseEntity
-////                .ok()
-////                .contentType(MediaType.IMAGE_JPEG)
-////                .body(bytes);
-//
-//    }
+
+
+
+
+
+
+
+
+
+
 
 }

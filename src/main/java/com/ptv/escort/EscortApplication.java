@@ -3,8 +3,10 @@ package com.ptv.escort;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.SerializationFeature;
+import com.ptv.escort.Utils.FileUploadUtil;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
+import org.springframework.boot.context.properties.EnableConfigurationProperties;
 import org.springframework.context.annotation.Bean;
 import org.springframework.http.MediaType;
 import org.springframework.http.converter.ByteArrayHttpMessageConverter;
@@ -16,6 +18,9 @@ import java.util.ArrayList;
 import java.util.List;
 
 @SpringBootApplication
+@EnableConfigurationProperties({
+        FileUploadUtil.class
+})
 public class EscortApplication extends WebMvcConfigurerAdapter {
 
     public static void main(String[] args) {
@@ -37,24 +42,24 @@ public class EscortApplication extends WebMvcConfigurerAdapter {
 //        return converter;
 //    }
 
-    @Bean
-    public ByteArrayHttpMessageConverter byteArrayHttpMessageConverter() {
-        ByteArrayHttpMessageConverter arrayHttpMessageConverter = new ByteArrayHttpMessageConverter();
-        arrayHttpMessageConverter.setSupportedMediaTypes(getSupportedMediaTypes());
-        return arrayHttpMessageConverter;
-    }
-
-    private List<MediaType> getSupportedMediaTypes() {
-        List<MediaType> list = new ArrayList<>();
-        list.add(MediaType.IMAGE_JPEG);
-        list.add(MediaType.IMAGE_PNG);
-        list.add(MediaType.APPLICATION_OCTET_STREAM);
-        list.add(MediaType.APPLICATION_JSON);
-        list.add(MediaType.APPLICATION_JSON_UTF8);
-        list.add(MediaType.valueOf(MediaType.APPLICATION_JSON_VALUE));
-        list.add(MediaType.valueOf(MediaType.APPLICATION_JSON_UTF8_VALUE));
-
-        return list;
-    }
+//    @Bean
+//    public ByteArrayHttpMessageConverter byteArrayHttpMessageConverter() {
+//        ByteArrayHttpMessageConverter arrayHttpMessageConverter = new ByteArrayHttpMessageConverter();
+//        arrayHttpMessageConverter.setSupportedMediaTypes(getSupportedMediaTypes());
+//        return arrayHttpMessageConverter;
+//    }
+//
+//    private List<MediaType> getSupportedMediaTypes() {
+//        List<MediaType> list = new ArrayList<>();
+//        list.add(MediaType.IMAGE_JPEG);
+//        list.add(MediaType.IMAGE_PNG);
+//        list.add(MediaType.APPLICATION_OCTET_STREAM);
+//        list.add(MediaType.APPLICATION_JSON);
+//        list.add(MediaType.APPLICATION_JSON_UTF8);
+//        list.add(MediaType.valueOf(MediaType.APPLICATION_JSON_VALUE));
+//        list.add(MediaType.valueOf(MediaType.APPLICATION_JSON_UTF8_VALUE));
+//
+//        return list;
+//    }
 
 }
