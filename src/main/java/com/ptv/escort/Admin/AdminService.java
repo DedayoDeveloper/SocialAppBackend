@@ -76,6 +76,11 @@ public class AdminService {
         return escorts;
     }
 
+
+    public void saveImagePathForUser(String fileDownloadUri, long id) {
+        int updateImagePath = escortReposiroty.updateImagePath(fileDownloadUri,id);
+    }
+
     public int deleteEscort(long id) {
         int deleteEscort = escortReposiroty.softDelete(id);
         if (deleteEscort < 1){
@@ -114,4 +119,6 @@ public class AdminService {
         }
         return "Payment update successfull!";
     }
+
+
 }

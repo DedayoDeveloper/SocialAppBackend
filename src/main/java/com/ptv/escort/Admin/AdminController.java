@@ -119,6 +119,8 @@ public class AdminController {
                 .path(fileName)
                 .toUriString();
 
+        adminService.saveImagePathForUser(fileDownloadUri,escortDetails.getId());
+
         return new ImageFileResponse(fileDownloadUri,
                 image.getContentType(), image.getSize(), escortDetails);
     }

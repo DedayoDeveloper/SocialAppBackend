@@ -27,4 +27,9 @@ public interface EscortRepository extends JpaRepository<EscortDetails, Long> {
 
     @Query("select e from EscortDetails e where e.id = :id")
     EscortDetails findEscortDetailsById(long id);
+
+    @Transactional
+    @Modifying
+    @Query("update EscortDetails e set e.imagePath = :fileDownloadUri where e.id = :id")
+    int updateImagePath(String fileDownloadUri, long id);
 }

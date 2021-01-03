@@ -25,8 +25,8 @@ public class EscortDetails {
     @Column(name = "email")
     private String email;
 
-//    @Column(name = "imagePath")
-//    private String imagePath;
+    @Column(name = "imagePath")
+    private String imagePath;
 
 
     @Enumerated(EnumType.STRING)
@@ -50,12 +50,12 @@ public class EscortDetails {
         return delFlag;
     }
 
-    @Transient
-    public String getPhotosImagePath() {
-        if (photos == null) return null;
-
-        return "/downloadFile/" + id + "/" + photos;
-    }
+//    @Transient
+//    public String getPhotosImagePath() {
+//        if (photos == null) return null;
+//
+//        return "/downloadFile/" + id + "/" + photos;
+//    }
 
 
     public long getId() {
@@ -122,4 +122,11 @@ public class EscortDetails {
         this.description = description;
     }
 
+    public String getImagePath() {
+        return imagePath;
+    }
+
+    public void setImagePath(String imagePath) {
+        this.imagePath = imagePath;
+    }
 }
