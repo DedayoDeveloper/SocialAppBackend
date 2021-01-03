@@ -25,6 +25,9 @@ public class EscortDetails {
     @Column(name = "email")
     private String email;
 
+//    @Column(name = "imagePath")
+//    private String imagePath;
+
 
     @Enumerated(EnumType.STRING)
     @Column(name = "category")
@@ -51,7 +54,7 @@ public class EscortDetails {
     public String getPhotosImagePath() {
         if (photos == null) return null;
 
-        return "/user-photos/" + id + "/" + photos;
+        return "/downloadFile/" + id + "/" + photos;
     }
 
 
