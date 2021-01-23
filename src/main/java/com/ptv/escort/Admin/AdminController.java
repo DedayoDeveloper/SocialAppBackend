@@ -100,7 +100,7 @@ public class AdminController {
 
 
 
-    @PostMapping("/createescort")
+    @PostMapping(value = "/createescort")
     public ImageFileResponse createEscort(@RequestParam String name,
                                           @RequestParam String location,
                                           @RequestParam String phoneNumber,
@@ -203,6 +203,10 @@ public class AdminController {
 
 
 
+//    @PutMapping(value = "/update/escort/availablity/{id}")
+//    public ResponseEntity<?> updateEscortAvailablity(@PathVariable("id") long id, @RequestBody EscortDetails value){
+//        return ResponseEntity.ok(adminService.toggleEscortAvailablity(id,value.isAvailable()));
+//    }
 
 
 

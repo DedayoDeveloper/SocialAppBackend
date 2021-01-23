@@ -42,6 +42,9 @@ public class EscortDetails {
     @Column(name = "del_Flag")
     private String delFlag;
 
+//    @Column(name = "available")
+//    private boolean available;
+
     public void setDelFlag(String delFlag) {
         this.delFlag = delFlag;
     }
@@ -129,4 +132,12 @@ public class EscortDetails {
     public void setImagePath(String imagePath) {
         this.imagePath = imagePath;
     }
+
+//    public boolean isAvailable() {
+//        return available;
+//    }
+//
+//    public void setAvailable(boolean available) {
+//        this.available = available;
+//    }
 }

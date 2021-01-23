@@ -63,6 +63,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter{
                 "/listallcategory",
                 "/update/registration/payment/{id}",
                 "/add/categories",
+                "/confirm/paymentdetails/for/escort",
                 "/downloadFile/**",
                 "/admin/authenticate").permitAll().anyRequest().authenticated().and().exceptionHandling()
                 .authenticationEntryPoint(jwtAuthenticationEntryPoint)

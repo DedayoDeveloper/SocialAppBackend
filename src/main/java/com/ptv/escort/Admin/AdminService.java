@@ -7,6 +7,7 @@ import com.ptv.escort.User.User;
 import com.ptv.escort.User.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
+import org.springframework.http.ResponseEntity;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
@@ -58,6 +59,7 @@ public class AdminService {
         ed.setDelFlag("N");
         ed.setLocation(location);
         ed.setDescription(description);
+//        ed.setAvailable(true);
         escortReposiroty.save(ed);
         return ed;
     }
@@ -103,13 +105,14 @@ public class AdminService {
             escortPaymentDetails.setPaymentConfirmed(false);
             epdRepository.save(escortPaymentDetails);
         }
-        if (getDetails.isPaymentConfirmed() == false){
+        EscortPaymentDetails getNewDetails = epdRepository.findByUserAndEscort(userId, escortId);
+        if (!getNewDetails.isPaymentConfirmed()){
             getEscortDetails.setEmail(null);
             getEscortDetails.setPhoneNumber(null);
-            return new PaymentResponse(getEscortDetails, getDetails);
-        } else
+            return new PaymentResponse(getEscortDetails, getNewDetails);
+        }
 
-        return new PaymentResponse(getEscortDetails, getDetails);
+        return new PaymentResponse(getEscortDetails, getNewDetails);
     }
 
     public String updateEscortPayment(long idOfUser, long idOfEscort) {
@@ -119,6 +122,19 @@ public class AdminService {
         }
         return "Payment update successfull!";
     }
+
+//    public String toggleEscortAvailablity(long id, boolean value) {
+//        String success = "";
+//        int updateEscortStatus = escortReposiroty.updateEscortAvailablity(value,id);
+//       if (updateEscortStatus > 0){
+//           success = "User status has been updated";
+//       }
+//       return success;
+//    }
+
+
+
+
 
 
 }

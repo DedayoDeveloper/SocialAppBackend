@@ -32,4 +32,9 @@ public interface EscortRepository extends JpaRepository<EscortDetails, Long> {
     @Modifying
     @Query("update EscortDetails e set e.imagePath = :fileDownloadUri where e.id = :id")
     int updateImagePath(String fileDownloadUri, long id);
+
+//    @Transactional
+//    @Modifying
+//    @Query("update EscortDetails e set e.available = :available where e.id = :id")
+//    int updateEscortAvailablity(boolean available, long id);
 }
