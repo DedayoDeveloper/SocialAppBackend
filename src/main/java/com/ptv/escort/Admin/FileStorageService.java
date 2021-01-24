@@ -11,8 +11,12 @@ import org.springframework.stereotype.Service;
 import org.springframework.util.StringUtils;
 import org.springframework.web.multipart.MultipartFile;
 
+import javax.imageio.ImageIO;
+import java.awt.*;
+import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
+import java.io.InputStream;
 import java.net.MalformedURLException;
 import java.nio.file.Files;
 import java.nio.file.Path;
@@ -58,6 +62,10 @@ public class FileStorageService {
                 imageFile.getParentFile().mkdirs();
                 imageFile.createNewFile();
                     }
+            BufferedImage bi = ImageIO.read(imageFile);
+//            Image newResizedImage = bi.getScaledInstance(width, height, Image.SCALE_SMOOTH);
+//            BufferedImage buffered = new BufferedImage(width, height, file.getInputStream());
+//            buffered.getGraphics().drawImage(newResizedImage, 0, 0 , null);
             Files.copy(file.getInputStream(), targetLocation, StandardCopyOption.REPLACE_EXISTING);
 
 //            return fileName;

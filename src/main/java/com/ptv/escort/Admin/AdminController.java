@@ -201,6 +201,11 @@ public class AdminController {
         return ResponseEntity.ok(categoryService.getCategoryDetails(categoryName.getCategoryName()));
     }
 
+    @GetMapping("/getcategory/price")
+    public ResponseEntity<?> getCategoryPrice(){
+        return ResponseEntity.ok(categoryService.getCategoryPrices());
+    }
+
 
 
 //    @PutMapping(value = "/update/escort/availablity/{id}")

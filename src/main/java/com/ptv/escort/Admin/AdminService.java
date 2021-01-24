@@ -86,7 +86,7 @@ public class AdminService {
     public int deleteEscort(long id) {
         int deleteEscort = escortReposiroty.softDelete(id);
         if (deleteEscort < 1){
-            throw new RuntimeException("Unable to delete user");
+            throw new RuntimeException("Unable to delete escort");
         }
         return deleteEscort;
     }
@@ -111,9 +111,9 @@ public class AdminService {
             getEscortDetails.setPhoneNumber(null);
             return new PaymentResponse(getEscortDetails, getNewDetails);
         }
-
         return new PaymentResponse(getEscortDetails, getNewDetails);
     }
+
 
     public String updateEscortPayment(long idOfUser, long idOfEscort) {
         int update = epdRepository.updateEscortPayment(idOfUser,idOfEscort);
