@@ -2,6 +2,7 @@ package com.ptv.escort.Admin;
 
 
 import com.ptv.escort.Utils.FileUploadUtil;
+import org.apache.commons.io.FileUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -62,10 +63,7 @@ public class FileStorageService {
                 imageFile.getParentFile().mkdirs();
                 imageFile.createNewFile();
                     }
-            BufferedImage bi = ImageIO.read(imageFile);
-//            Image newResizedImage = bi.getScaledInstance(width, height, Image.SCALE_SMOOTH);
-//            BufferedImage buffered = new BufferedImage(width, height, file.getInputStream());
-//            buffered.getGraphics().drawImage(newResizedImage, 0, 0 , null);
+
             Files.copy(file.getInputStream(), targetLocation, StandardCopyOption.REPLACE_EXISTING);
 
 //            return fileName;
@@ -87,4 +85,28 @@ public class FileStorageService {
             throw new RuntimeException("File not found " + fileName, ex);
         }
     }
+
+
+    public boolean deleteFile(String fileName,long id) {
+
+        Path targetLocation = this.fileStorageLocation.resolve(id + "/" + fileName);
+        System.out.println("target location " + targetLocation);
+        Path dir = this.fileStorageLocation.resolve(Long.toString(id));
+        File imageFile = targetLocation.toFile();
+        boolean deleted = false;
+        try {
+
+            if (imageFile.delete()) {
+                System.out.println(fileName + " is deleted!");
+                FileUtils.deleteDirectory(new File(String.valueOf(dir)));
+                deleted = true;
+            } else {
+                throw new RuntimeException("Sorry, unable to delete the escort. Please try again later!");
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return deleted;
+    }
+
 }

@@ -29,6 +29,9 @@ public class AdminService {
     @Autowired
     private EPDRepository epdRepository;
 
+    @Autowired
+    private FileStorageService fileStorageService;
+
 
     public User loginAdmin(User user){
         User userbyemail = userRepository.findByEmail(user.getEmail());
@@ -84,10 +87,14 @@ public class AdminService {
     }
 
     public int deleteEscort(long id) {
+        EscortDetails escortDetails = escortReposiroty.findEscortDetailsById(id);
+        fileStorageService.deleteFile(escortDetails.getPhotos(),id);
         int deleteEscort = escortReposiroty.softDelete(id);
         if (deleteEscort < 1){
             throw new RuntimeException("Unable to delete escort");
         }
+
+
         return deleteEscort;
     }
 
