@@ -206,6 +206,11 @@ public class AdminController {
         return ResponseEntity.ok(categoryService.getCategoryPrices());
     }
 
+    @GetMapping("/list/states")
+    public ResponseEntity<?> getListOfAllLocations(){
+        return ResponseEntity.ok(Locations.values());
+    }
+
 
 
 //    @PutMapping(value = "/update/escort/availablity/{id}")
