@@ -5,6 +5,3 @@ spring:
     password: ${DB_PASSWORD}
     name: spring-blog
 
-  sql:
-    init:
-      mode: always
