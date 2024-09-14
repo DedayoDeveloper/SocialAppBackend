@@ -112,7 +112,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter{
         public void addCorsMappings(CorsRegistry registry) {
             registry.addMapping("/**")
                     .allowedOriginPatterns("*")
-                    .allowedOrigins("http://localhost:3000")
+                    .allowedOrigins("http://localhost:3000", "https://*.railway.app")
                     .allowedMethods("GET", "HEAD", "POST", "PUT", "DELETE", "OPTIONS")
                     .maxAge(3600).allowCredentials(true)
                     .allowedHeaders("*");
