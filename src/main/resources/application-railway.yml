@@ -5,6 +5,6 @@ spring:
     password: ${DB_PASSWORD}
     name: spring-blog
 
-app:
-  allow:
-    origins: "http://localhost:3000"
+  app:
+    allow:
+      origins: "http://localhost:3000"
