@@ -95,7 +95,7 @@ public class SecurityConfig {
                 .sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS);
 
         http.addFilterBefore(jwtRequestFilter, UsernamePasswordAuthenticationFilter.class);
-        http.cors();  // Enable CORS support
+        http.cors().disable();  // Enable CORS support
 
         return http.build();
     }
