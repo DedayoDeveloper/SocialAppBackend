@@ -35,8 +35,9 @@ public class SecurityConfig {
     @Autowired
     private JwtAuthenticationEntryPoint jwtAuthenticationEntryPoint;
 
-    @Value("${app.allow.origins}")
+    @Value("${app.allow.origins:http://localhost:3000}")
     private String allowOrigins;
+
 
     // CORS Configuration
     @Bean
