@@ -1,6 +1,5 @@
 package com.ptv.escort.Config;
 
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
@@ -8,117 +7,95 @@ import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Primary;
 import org.springframework.security.authentication.AuthenticationManager;
-import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
+import org.springframework.security.config.annotation.authentication.configuration.AuthenticationConfiguration;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
-import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
 import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.NoOpPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
+import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 import org.springframework.web.servlet.config.annotation.CorsRegistry;
 import org.springframework.web.servlet.config.annotation.EnableWebMvc;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
-import org.springframework.web.servlet.config.annotation.WebMvcConfigurerAdapter;
 
 @Configuration
 @EnableWebMvc
-@ComponentScan (basePackages = "com.ptv.escort")
+@ComponentScan(basePackages = "com.ptv.escort")
 @EnableWebSecurity
-public class SecurityConfig extends WebSecurityConfigurerAdapter{
-
-
+public class SecurityConfig {
 
     @Autowired
     private UserVerification myUserDetailsService;
 
     @Autowired
-    private JwtRequestFilter jwtrequestfilter;
+    private JwtRequestFilter jwtRequestFilter;
 
     @Autowired
     private JwtAuthenticationEntryPoint jwtAuthenticationEntryPoint;
 
-    @Override
-    protected void configure(AuthenticationManagerBuilder auth) throws Exception {
-        auth.userDetailsService(myUserDetailsService).passwordEncoder(bCryptPasswordEncoder());
+    @Value("${app.allow.origins}")
+    private String allowOrigins;
+
+    // CORS Configuration
+    @Bean
+    public WebMvcConfigurer corsConfigurer() {
+        return new WebMvcConfigurer() {
+            @Override
+            public void addCorsMappings(CorsRegistry registry) {
+                registry.addMapping("/**")
+                        .allowedOrigins(allowOrigins)
+                        .allowedHeaders("*")
+                        .allowedMethods("PUT", "DELETE", "GET", "POST")
+                        .allowCredentials(true)
+                        .maxAge(3600);
+            }
+        };
     }
 
+    // Password Encoder (BCrypt)
     @Bean
     public BCryptPasswordEncoder bCryptPasswordEncoder() {
         return new BCryptPasswordEncoder();
     }
 
-    @Bean
-    public JwtAuthenticationEntryPoint jwtAuthenticationEntryPointBean() throws Exception {
-        return new JwtAuthenticationEntryPoint();
-    }
-
-
-    @Override
-    protected void configure(HttpSecurity http) throws Exception {
-
-        http.csrf().disable().authorizeRequests().antMatchers("/authenticate",
-                "/createUser",
-                "/listallcategory",
-                "/update/registration/payment/{id}",
-                "/add/categories",
-                "/confirm/paymentdetails/for/escort",
-                "/list/states",
-                "/downloadFile/**",
-                "/admin/authenticate").permitAll().anyRequest().authenticated().and().exceptionHandling()
-                .authenticationEntryPoint(jwtAuthenticationEntryPoint)
-                .and().sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS);
-        http.addFilterBefore(jwtrequestfilter, UsernamePasswordAuthenticationFilter.class);
-
-        http.cors();
-    }
-
-
-    @Override
-    @Bean
-    public AuthenticationManager authenticationManagerBean() throws Exception {
-        return super.authenticationManagerBean();
-    }
-
+    // Password Encoder (NoOp - For simplicity, use only in dev)
     @Bean
     @Primary
-    public PasswordEncoder passwordEncoder() {
+    public PasswordEncoder noOpPasswordEncoder() {
         return NoOpPasswordEncoder.getInstance();
     }
 
-//    @Value( "${app.allow.origins}" )
-//    private String allowOrigins;
-//    @Bean
-//    public WebMvcConfigurer corsConfigurer() {
-//        System.out.println("allow origin: "+allowOrigins);
-//        return new WebMvcConfigurerAdapter(){
-//            @Override
-//            public void addCorsMappings(CorsRegistry registry) {
-//                registry.addMapping("/**")
-//                        //.allowedOrigins("http://localhost")
-//                        .allowedOrigins(allowOrigins)
-//                        .allowedHeaders("*")
-//                        .allowCredentials(true)
-//                        .allowedMethods("PUT", "DELETE","GET", "POST");
-//            }
-//        };
-//    }
-
-    @Configuration
-    public class WebConfiguration implements WebMvcConfigurer{
-
-        @Override
-        public void addCorsMappings(CorsRegistry registry) {
-            registry.addMapping("/**")
-                    .allowedOriginPatterns("*")
-                    .allowedOrigins("http://localhost:3000", "https://*.railway.app")
-                    .allowedMethods("GET", "HEAD", "POST", "PUT", "DELETE", "OPTIONS")
-                    .maxAge(3600).allowCredentials(true)
-                    .allowedHeaders("*");
-        }
-    }
+    // Authentication Manager Bean
+    @Bean
+    public AuthenticationManager authenticationManager(AuthenticationConfiguration authenticationConfiguration) throws Exception {
+        return authenticationConfiguration.getAuthenticationManager();
     }
 
+    // Security Filter Chain Configuration
+    @Bean
+    public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
+        http.csrf().disable()
+                .authorizeRequests()
+                .antMatchers("/authenticate",
+                        "/createUser",
+                        "/listallcategory",
+                        "/update/registration/payment/{id}",
+                        "/add/categories",
+                        "/confirm/paymentdetails/for/escort",
+                        "/list/states",
+                        "/downloadFile/**",
+                        "/admin/authenticate").permitAll()
+                .anyRequest().authenticated()
+                .and()
+                .exceptionHandling().authenticationEntryPoint(jwtAuthenticationEntryPoint)
+                .and()
+                .sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS);
 
+        http.addFilterBefore(jwtRequestFilter, UsernamePasswordAuthenticationFilter.class);
+        http.cors();  // Enable CORS support
 
+        return http.build();
+    }
+}
