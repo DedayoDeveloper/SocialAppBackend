@@ -33,22 +33,22 @@ public class AdminService {
     private FileStorageService fileStorageService;
 
 
-    public User loginAdmin(User user){
-        User userbyemail = userRepository.findByEmail(user.getEmail());
-        if (!userbyemail.getUserRole().equals("ROLE_ADMIN")) {
-            throw new RuntimeException("User does not exist.");
-        }
-        boolean passwordcheck = passwordencoder.matches(user.getPassword(), userbyemail.getPassword());
-        if (passwordcheck == false) {
-            throw new RuntimeException("Password mismatch.");
-        }
-//        int authorized = userbyemail.getEnabled();
-//        if (authorized == 0 || authorized == 2) {
-//            throw new RuntimeException("Please contact your supervisor to authorize your profile.");
+//    public User loginAdmin(User user){
+//        User userbyemail = userRepository.findByEmail(user.getEmail());
+//        if (!userbyemail.getUserRole().equals("ROLE_ADMIN")) {
+//            throw new RuntimeException("User does not exist.");
 //        }
-//        List<MapUserLocation> getUserLocationDetails = mapUserRepo.findByEmail(email);
-        return userbyemail;
-    }
+//        boolean passwordcheck = passwordencoder.matches(user.getPassword(), userbyemail.getPassword());
+//        if (passwordcheck == false) {
+//            throw new RuntimeException("Password mismatch.");
+//        }
+////        int authorized = userbyemail.getEnabled();
+////        if (authorized == 0 || authorized == 2) {
+////            throw new RuntimeException("Please contact your supervisor to authorize your profile.");
+////        }
+////        List<MapUserLocation> getUserLocationDetails = mapUserRepo.findByEmail(email);
+//        return userbyemail;
+//    }
 
 
     public EscortDetails createNewEscort(String name, String location, String phoneNumber, String email

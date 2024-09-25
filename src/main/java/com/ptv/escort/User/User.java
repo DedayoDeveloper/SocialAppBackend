@@ -7,6 +7,7 @@ import com.ptv.escort.Admin.EscortPaymentDetails;
 import com.ptv.escort.Category.CategoryName;
 
 import javax.persistence.*;
+import java.util.List;
 
 @Entity
 @Table(name = "user_details")
@@ -26,23 +27,44 @@ public class User {
     @Column(name = "email")
     private String email;
 
+    @Column(name = "phone")
+    private String phone;
+
+    @Column(name = "dateOfBirth")
+    private String dateOfBirth;
+
+    @Column(name = "showGender")
+    private boolean showGender;
+
+
+    @ElementCollection
+    @CollectionTable(name = "user_interests", joinColumns = @JoinColumn(name = "id"))
+    @Column(name = "interest")
+    private List<String> interests;
+
+    @Column(name = "hobbies")
+    private String hobbies;
+
     @JsonIgnoreProperties
     @Column(name = "password")
     private String password;
 
+//    @Enumerated(EnumType.STRING)
+//    @Column(name = "category")
+//    private CategoryName category;
 
-    @Enumerated(EnumType.STRING)
-    @Column(name = "category")
-    private CategoryName category;
+//    @Column(name = "user_role")
+//    private String userRole;
 
-    @Column(name = "user_role")
-    private String userRole;
+//    @Column(name = "sex")
+//    private String sex;
+//
+//    @Column(name = "registration_payment")
+//    private boolean registrationPayment;
 
-    @Column(name = "sex")
-    private String sex;
+    @OneToMany(mappedBy = "user", cascade = CascadeType.ALL, fetch = FetchType.LAZY, orphanRemoval = true)
+    private List<Photos> photos;
 
-    @Column(name = "registration_payment")
-    private boolean registrationPayment;
 
 
     public long getId() {
@@ -93,36 +115,59 @@ public class User {
         this.password = password;
     }
 
-    public CategoryName getCategory() {
-        return category;
+//    public CategoryName getCategory() {
+//        return category;
+//    }
+//
+//    public void setCategory(CategoryName category) {
+//        this.category = category;
+//    }
+
+//    public String getUserRole() {
+//        return userRole;
+//    }
+//
+//    public void setUserRole(String userRole) {
+//        this.userRole = userRole;
+//    }
+//
+//    public String getSex() {
+//        return sex;
+//    }
+//
+//    public void setSex(String sex) {
+//        this.sex = sex;
+//    }
+
+    public List<Photos> getPhotos() {
+        return photos;
     }
 
-    public void setCategory(CategoryName category) {
-        this.category = category;
+    public void setPhotos(List<Photos> photos) {
+        this.photos = photos;
     }
 
-    public String getUserRole() {
-        return userRole;
-    }
+    public List<String> getInterests() {return interests;}
+    public void setInterests(List<String> interests) {this.interests = interests;}
 
-    public void setUserRole(String userRole) {
-        this.userRole = userRole;
-    }
+    public String getHobbies() {return hobbies;}
+    public void setHobbies(String hobbies) {this.hobbies = hobbies;}
 
-    public String getSex() {
-        return sex;
-    }
+    public String getDateOfBirth() {return dateOfBirth;}
+    public void setDateOfBirth(String dateOfBirth) {this.dateOfBirth = dateOfBirth;}
 
-    public void setSex(String sex) {
-        this.sex = sex;
-    }
+    public boolean isShowGender() {return showGender;}
+    public void setShowGender(boolean showGender) {this.showGender = showGender;}
+
+    public String getPhone() {return phone;}
+    public void setPhone(String phone) {this.phone = phone;}
 
 
-    public boolean isRegistrationPayment() {
-        return registrationPayment;
-    }
+//    public boolean isRegistrationPayment() {
+//        return registrationPayment;
+//    }
 
-    public void setRegistrationPayment(boolean registrationPayment) {
-        this.registrationPayment = registrationPayment;
-    }
+//   // public void setRegistrationPayment(boolean registrationPayment) {
+//        this.registrationPayment = registrationPayment;
+//    }
 }

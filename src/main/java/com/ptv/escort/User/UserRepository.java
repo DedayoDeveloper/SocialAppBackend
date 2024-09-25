@@ -17,8 +17,8 @@ public interface UserRepository extends JpaRepository<User, Long> {
 
     User findByEmail(String email);
 
-    @Query("select u from User u where u.category = :category")
-    List<User> findAllByCategory(String category);
+//    @Query("select u from User u where u.category = :category")
+//    List<User> findAllByCategory(String category);
 
     @Modifying
     @Transactional

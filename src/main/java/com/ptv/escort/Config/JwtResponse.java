@@ -10,10 +10,10 @@ public class JwtResponse {
     private Category category;
     private final String jwt;
 
-    public JwtResponse(String jwt, User user, Category category) {
+    public JwtResponse(String jwt, User user) {
         this.jwt = jwt;
         this.user = user;
-        this.category = category;
+//        this.category = category;
     }
 
 
@@ -26,7 +26,7 @@ public class JwtResponse {
         return user;
     }
 
-    public Category getCategory() {
-        return category;
-    }
+//    public Category getCategory() {
+//        return category;
+//    }
 }

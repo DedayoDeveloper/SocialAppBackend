@@ -57,7 +57,7 @@ public class UserController {
         }
         User user = userService.login(authenticationRequest);
         user.setPassword(null);
-        Category category = categoryRepository.findByCategoryName(user.getCategory());
+//        Category category = categoryRepository.findByCategoryName(user.getCategory());
         try{
             ObjectMapper mapper = new ObjectMapper();
             logger.info(mapper.writeValueAsString(user));
@@ -67,13 +67,13 @@ public class UserController {
         logger.info("user details {}", user);
         final String jwt = jwttokenutil.generateToken(userDetails);
         logger.info(jwt);
-        return ResponseEntity.ok(new JwtResponse(jwt,user,category));
+        return ResponseEntity.ok(new JwtResponse(jwt,user));
     }
 
 
 
     @PostMapping("/createUser")
-    public ResponseEntity<?> createUser(@RequestBody User user){
+    public ResponseEntity<?> createUser(@RequestBody UserDto user){
         return ResponseEntity.ok(userService.createUser(user));
     }
 

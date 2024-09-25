@@ -29,7 +29,7 @@ public class UserService {
     private static final Logger logger = LoggerFactory.getLogger(UserService.class);
 
 
-    public User createUser(User user){
+    public User createUser(UserDto user){
 
         User checkUser = userRepository.findByEmail(user.getEmail());
         if (checkUser != null){
@@ -40,15 +40,15 @@ public class UserService {
             throw new RuntimeException("Username not available");
         }
             User createUser = new User();
-            createUser.setFirstname(user.getFirstname());
-            createUser.setLastname(user.getLastname());
+            createUser.setFirstname(user.getFirstName());
+            createUser.setLastname(user.getLastName());
             createUser.setEmail(user.getEmail());
             createUser.setUsername(user.getUsername());
-            createUser.setCategory(user.getCategory());
+//            createUser.setCategory(user.getCategory());
             createUser.setPassword(passwordencoder.encode(user.getPassword()));
-            createUser.setUserRole(user.getUserRole());
-            createUser.setSex(user.getSex());
-            createUser.setRegistrationPayment(false);
+//            createUser.setUserRole(user.getUserRole());
+//            createUser.setSex(user.getSex());
+//            createUser.setRegistrationPayment(false);
             userRepository.save(createUser);
             return createUser;
 

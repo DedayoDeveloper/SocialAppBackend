@@ -69,21 +69,21 @@ public class AdminController {
 
 
 
-    @RequestMapping(value = "/admin/authenticate", method = RequestMethod.POST)
-    public ResponseEntity<?> createAuthenticationToken(@RequestBody User authenticationRequest) throws Exception {
-
-        final UserDetails userDetails = myUserDetailsService.loadUserByUsername(authenticationRequest.getEmail());
-        if (userDetails == null) {
-            throw new RuntimeException("User does not exist.");
-        }
-        User user = adminService.loginAdmin(authenticationRequest);
-
-        Category category = null;
-
-        final String jwt = jwttokenutil.generateToken(userDetails);
-        logger.info(jwt);
-        return ResponseEntity.ok(new JwtResponse(jwt,user,category));
-    }
+//    @RequestMapping(value = "/admin/authenticate", method = RequestMethod.POST)
+//    public ResponseEntity<?> createAuthenticationToken(@RequestBody User authenticationRequest) throws Exception {
+//
+//        final UserDetails userDetails = myUserDetailsService.loadUserByUsername(authenticationRequest.getEmail());
+//        if (userDetails == null) {
+//            throw new RuntimeException("User does not exist.");
+//        }
+////        User user = adminService.loginAdmin(authenticationRequest);
+//
+//        Category category = null;
+//
+//        final String jwt = jwttokenutil.generateToken(userDetails);
+//        logger.info(jwt);
+//        return ResponseEntity.ok(new JwtResponse(jwt,user));
+//    }
 
 
     @GetMapping("/getallescort")
